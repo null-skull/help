@@ -5,25 +5,44 @@ import { ChevronDown } from "lucide-react";
 import { FAQ } from "@/lib/home-new-content";
 import Section from "@/components/home-new/Section";
 import Reveal from "@/components/Reveal";
+import AskQuestionCard from "@/components/home-new/AskQuestionCard";
 
-export default function FAQSection() {
-  const defaultIndex = FAQ.items.findIndex((item) => item.defaultOpen);
+type FAQContent = {
+  heading: string;
+  sub: string;
+  items: { question: string; answer: string; defaultOpen?: boolean }[];
+};
+
+// Defaults to the home page FAQ; other pages pass their own content and id.
+export default function FAQSection({
+  content = FAQ,
+  id = "faq",
+}: {
+  content?: FAQContent;
+  id?: string;
+}) {
+  const defaultIndex = content.items.findIndex((item) => item.defaultOpen);
   const [openIndex, setOpenIndex] = useState(defaultIndex === -1 ? 0 : defaultIndex);
 
   return (
-    <Section id="faq" className="tone-cyan flex flex-col gap-10 border-b px-gutter py-section lg:flex-row lg:gap-split">
-      <Reveal as="div" className="flex max-w-heading flex-1 flex-col gap-4">
+    <Section id={id} className="tone-cyan flex flex-col gap-10 border-b px-gutter py-section lg:flex-row lg:gap-split">
+      {/* Heading column stays pinned below the sticky nav while the answers
+          scroll past (desktop only, where the two columns sit side by side). */}
+      <Reveal as="div" className="flex max-w-heading flex-1 flex-col gap-4 lg:sticky lg:top-28 lg:self-start">
         <h2 className="text-h2 font-medium leading-[1.1] text-fg">
-          {FAQ.heading}
+          {content.heading}
         </h2>
-        <p className="text-lead leading-relaxed text-fg-muted">{FAQ.sub}</p>
+        <p className="text-lead leading-relaxed text-fg-muted">{content.sub}</p>
+        <div className="mt-4">
+          <AskQuestionCard />
+        </div>
       </Reveal>
 
       <Reveal
         selector=":scope > div"
         className="flex flex-1 flex-col gap-6 rounded-2xl px-inset py-6"
       >
-        {FAQ.items.map((item, index) => {
+        {content.items.map((item, index) => {
           const isOpen = index === openIndex;
           return (
             <div key={item.question}>

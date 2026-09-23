@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, ChevronDown, Users } from "lucide-react";
-import { PRICING } from "@/lib/home-new-content";
+import Link from "next/link";
+import { ArrowRight, Check, ChevronDown, Users } from "lucide-react";
+import { PRICING, PRICING_PAGE } from "@/lib/home-new-content";
 import Section from "@/components/home-new/Section";
 import Reveal from "@/components/Reveal";
 import { openBookDemo } from "@/lib/book-demo-modal";
@@ -143,25 +144,11 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
   );
 }
 
-export default function Pricing() {
+/** Plan cards plus the credit top-ups strip — shared by the home page's
+ *  pricing section and the /pricing page. */
+export function PricingPlans() {
   return (
-    <Section id="pricing" className="tone-yellow flex flex-col gap-stack border-b px-gutter py-section">
-      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-split">
-        <div className="flex flex-col gap-4">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
-            {PRICING.badge}
-          </span>
-          <h2 className="max-w-xl text-h2 font-medium leading-[1.1] text-fg">
-            {PRICING.heading.map((line, i) => (
-              <span key={i} className="block">
-                {line}
-              </span>
-            ))}
-          </h2>
-        </div>
-        <p className="max-w-[28em] text-lead leading-relaxed text-fg-muted lg:max-w-[min(28em,42%)] lg:pt-2">{PRICING.description}</p>
-      </Reveal>
-
+    <>
       <Reveal selector=":scope > div" className="grid grid-cols-1 gap-grid md:grid-cols-2 lg:grid-cols-3 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1">
         {PRICING.plans.map((plan) => (
           <PlanCard key={plan.name} plan={plan} />
@@ -190,6 +177,38 @@ export default function Pricing() {
           ))}
         </div>
       </Reveal>
+    </>
+  );
+}
+
+export default function Pricing() {
+  return (
+    <Section id="pricing" className="tone-yellow flex flex-col gap-stack border-b px-gutter py-section">
+      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-split">
+        <div className="flex flex-col gap-4">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
+            {PRICING.badge}
+          </span>
+          <h2 className="max-w-xl text-h2 font-medium leading-[1.1] text-fg">
+            {PRICING.heading.map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
+          </h2>
+        </div>
+        <p className="max-w-[28em] text-lead leading-relaxed text-fg-muted lg:max-w-[min(28em,42%)] lg:pt-2">{PRICING.description}</p>
+      </Reveal>
+
+      <PricingPlans />
+
+      <Link
+        href="/pricing"
+        className="group inline-flex w-fit items-center gap-2 self-center text-base font-medium text-accent transition-colors hover:text-primary-hover"
+      >
+        {PRICING_PAGE.compareLink}
+        <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+      </Link>
     </Section>
   );
 }

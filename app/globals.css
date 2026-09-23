@@ -1,22 +1,8 @@
 @import "tailwindcss";
 
-/* Fixed light theme — matches Samvaad's palette exactly, no system dark-mode switching. */
 :root {
-  --bg: #f4f2f1;
-  --bg-alt: #f1f0ee;
-  --surface: #ffffff;
-  --surface-blur: #ffffff60;
-  --border: #e5e0dc;
-  --border-2: #ded8d3;
-  --ink: #2c2c2c;
-  --text: #2c2c2c;
-  --text-2: #3d3d3d;
-  --text-muted: #6b6560;
-  --text-dim: #999999;
-  --accent-blue: #2572ed;
-
-  /* Dark home-new theme — change a value here to re-theme that role across
-     the whole /home-new page. Surfaces step up in lightness (bg → surface →
+  /* Dark site theme — change a value here to re-theme that role across
+     the whole site. Surfaces step up in lightness (bg → surface →
      surface-2 → surface-hover) to express elevation; text has three levels
      (primary / secondary / muted); borders have a default and a strong
      variant for hover and emphasis. */
@@ -25,9 +11,9 @@
   --hn-surface-2: #111a22;
   --hn-surface-hover: #15212a;
 
-  --hn-primary: #0a9396;
-  --hn-primary-hover: #0cb5b8;
-  --hn-primary-active: #08777a;
+  --hn-primary: #3B82F6;
+  --hn-primary-hover: #2e7eff;
+  --hn-primary-active: #0a5de4;
   --hn-primary-soft: color-mix(in oklab, var(--hn-primary) 14%, var(--hn-bg));
 
   --hn-text: #f4f8f9;
@@ -41,31 +27,9 @@
   --hn-warning: #f59e0b;
   --hn-error: #ef4444;
   --hn-info: #4f8cff;
-
-  --r-sm: 8px;
-  --r-md: 14px;
-  --r-lg: 24px;
-  --r-xl: 32px;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.14);
-  --rainbow: linear-gradient(90deg, #ff2f2f 0%, #ef7b16 36%, #8a43e1 70%, #d511fd 100%);
-  --pastel: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-bg-alt: var(--bg-alt);
-  --color-surface: var(--surface);
-  --color-border: var(--border);
-  --color-border-2: var(--border-2);
-  --color-ink: var(--ink);
-  --color-text: var(--text);
-  --color-text-2: var(--text-2);
-  --color-text-muted: var(--text-muted);
-  --color-text-dim: var(--text-dim);
-  --color-accent-blue: var(--accent-blue);
   --color-page: var(--hn-bg);
   --color-card: var(--hn-surface);
   --color-card-2: var(--hn-surface-2);
@@ -133,8 +97,8 @@ html {
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--hn-bg);
+  color: var(--hn-text);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   /* Safety net against stray horizontal overflow. `clip` (unlike `hidden`)
      doesn't create a scroll container, so position: sticky keeps working. */
@@ -145,42 +109,16 @@ body {
   font-family: var(--font-bricolage), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.rainbow-glow {
-  background: var(--rainbow);
-  filter: blur(14px);
-}
+/* Note: shadows that use a CSS variable are written as plain classes (see
+   .shadow-primary and .tone-glow below) instead of Tailwind's
+   shadow-[var(--…)] arbitrary-value syntax, which triggers a Turbopack /
+   Lightning CSS parser bug that corrupts nearby generated CSS (see git
+   history for the "Parsing CSS source code failed" build error). */
 
-.pastel-text {
-  background: var(--pastel);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Plain classes for the --shadow-* tokens, instead of Tailwind's
-   shadow-[var(--shadow-md)] arbitrary-value syntax, which triggers a
-   Turbopack/Lightning CSS parser bug that corrupts nearby generated CSS
-   (see git history for the "Parsing CSS source code failed" build error). */
-.shadow-elevation-sm {
-  box-shadow: var(--shadow-sm);
-}
-
-.shadow-elevation-md {
-  box-shadow: var(--shadow-md);
-}
-
-.shadow-elevation-lg {
-  box-shadow: var(--shadow-lg);
-}
-
-.shadow-elevation-xl {
-  box-shadow: var(--shadow-xl);
-}
-
-/* Home-new scrollbar: primary thumb on the dark page background. Scoped via
-   :has() to pages that render .home-new, so the light / page keeps its
-   default scrollbar; also covers inner scroll areas (mobile menu, modal,
-   seat picker). scrollbar-color is only the fallback for browsers without
+/* Site scrollbar: primary thumb on the dark page background, applied to the
+   page (via :has(.home-new), the root wrapper in app/layout.tsx) and to
+   inner scroll areas (mobile menu, modal, seat picker, comparison table).
+   scrollbar-color is only the fallback for browsers without
    ::-webkit-scrollbar (Firefox) — in Chromium, setting it would override
    and disable the webkit styles below. */
 @supports not selector(::-webkit-scrollbar) {
@@ -226,6 +164,73 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   color: var(--hn-text);
 }
 
+/* ---- Page transitions & load motion ------------------------------------
+   Route changes run through the View Transitions API (React <ViewTransition>
+   in components/home-new/PageTransition.tsx). Only the page content animates:
+   the old page lifts away and fades, the new one rises in with a soft blur.
+   The header is named "site-header" and pinned so it never moves, and the
+   root snapshot swaps instantly instead of cross-fading the whole screen. */
+::view-transition {
+  /* Let clicks pass through to the live page while an animation runs. */
+  pointer-events: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.page-exit) {
+  animation: hn-page-out 200ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(.page-enter) {
+  animation: hn-page-in 520ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+
+@keyframes hn-page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-16px);
+    filter: blur(4px);
+  }
+}
+
+@keyframes hn-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(8px);
+  }
+}
+
+/* First load: the header drops in from above. Uses `transform` while the
+   hide-on-scroll behaviour uses the separate `translate` property, so the
+   two never fight; `backwards` fill leaves no transform behind afterwards. */
+.site-header-in {
+  animation: hn-header-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 150ms backwards;
+}
+
+@keyframes hn-header-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
 /* Per-section accent. Set one of these on a section and every *-accent
    utility inside it (text-accent, bg-accent/10, border-accent/40, …) picks
    up that color through the inherited --accent variable. All four tones
@@ -251,6 +256,26 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
    shadow-[…] arbitrary values — see the Lightning CSS note above). */
 .tone-glow {
   box-shadow: 0 20px 60px -10px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+/* Soft checkerboard of square tiles (used on the FAQ "Ask a Question" card),
+   strongest at the top-left and fading toward the bottom-right so the text
+   side stays calm. */
+.card-tiles {
+  background-image: conic-gradient(
+    color-mix(in oklab, var(--hn-text) 4%, transparent) 25%,
+    transparent 0 50%,
+    color-mix(in oklab, var(--hn-text) 4%, transparent) 0 75%,
+    transparent 0
+  );
+  background-size: 5.5rem 5.5rem;
+  -webkit-mask-image: linear-gradient(135deg, black 15%, transparent 80%);
+  mask-image: linear-gradient(135deg, black 15%, transparent 80%);
+}
+
+/* Smaller tiles for compact cards (e.g. the Use Cases grid). */
+.card-tiles-sm {
+  background-size: 2.5rem 2.5rem;
 }
 
 /* Soft primary-colored lift under filled buttons. */
@@ -376,17 +401,6 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -457,5 +471,15 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
 
   .preloader-wave-mask {
     animation: none;
+  }
+
+  .site-header-in {
+    animation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

@@ -1,9 +1,12 @@
+// Internal links: "/" and "/#section" point at the home page (smooth-scrolled
+// when already on it), other paths are separate routes.
 export const NAV_LINKS = [
-  { label: "Home", href: "#hero" },
-  { label: "How it Works", href: "#how-it-works" },
-  { label: "Platform", href: "#platform" },
-  { label: "Features", href: "#features" },
-  { label: "FAQs", href: "#faq" },
+  { label: "Home", href: "/" },
+  { label: "How it Works", href: "/#how-it-works" },
+  { label: "Platform", href: "/#platform" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "FAQs", href: "/#faq" },
 ];
 
 export const ANNOUNCEMENT = {
@@ -325,17 +328,19 @@ export const FOOTER = {
     {
       title: "Product",
       links: [
-        { label: "How it Works", href: "#how-it-works" },
-        { label: "Why Helpperr", href: "#platform" },
-        { label: "Product Showcase", href: "#product-showcase" },
-        { label: "Use Cases", href: "#use-cases" },
+        { label: "How it Works", href: "/#how-it-works" },
+        { label: "Why Helpperr", href: "/#platform" },
+        { label: "Product Showcase", href: "/#product-showcase" },
+        { label: "Use Cases", href: "/#use-cases" },
+        { label: "Pricing", href: "/pricing" },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "Book a Demo", href: "#cta" },
-        { label: "Chrome Extension", href: "#hero" },
+        { label: "Book a Demo", href: "/#cta" },
+        { label: "Chrome Extension", href: "/#hero" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
@@ -349,4 +354,138 @@ export const FOOTER = {
   social: { label: "Follow us" },
   copyright: "© 2026 Helpperr Inc. All rights reserved.",
   tagline: "Made with ♥ for teams who document",
+};
+
+// Pricing page (/pricing). Every value below is derived from the PRICING plans
+// above — keep the two in sync when plan details change. In comparison rows a
+// string is shown as-is, `true` renders a check and `false` a dash.
+export const PRICING_PAGE = {
+  badge: "PRICING",
+  heading: "Plans that grow with your documentation",
+  sub: "Start free, upgrade when you need more credits, and bring your team along when you're ready. Every plan runs on AI credits — pay for what you actually generate.",
+  compareLink: "Compare all plans",
+  comparison: {
+    badge: "COMPARE",
+    heading: "Compare plans side by side",
+    sub: "Everything included in each plan, so you can pick the right fit at a glance.",
+    groups: [
+      {
+        title: "Pricing",
+        rows: [
+          { label: "Price", values: ["$0", "$15 / month", "$25 / seat / month"] },
+          { label: "Free trial", values: ["14 days", false, false] },
+          { label: "Credit card required", values: ["No", "Yes", "Yes"] },
+          { label: "Billed to", values: [false, "Your user account", "The workspace"] },
+        ],
+      },
+      {
+        title: "Credits",
+        rows: [
+          { label: "AI credits", values: ["100 total", "700 / month", "1,200 / seat / month"] },
+          { label: "Credits refresh monthly", values: [false, true, true] },
+          { label: "Shared team credit pool", values: [false, false, true] },
+          { label: "Credit top-ups", values: [false, true, true] },
+        ],
+      },
+      {
+        title: "Workspace",
+        rows: [
+          { label: "Users", values: ["1", "1", "2–15"] },
+          { label: "Workspace", values: ["Personal", "Personal", "Shared team"] },
+          { label: "View & share guides", values: [true, true, true] },
+        ],
+      },
+    ],
+  },
+  faq: {
+    heading: "Pricing FAQs",
+    sub: "Everything you need to know about plans, credits and billing.",
+    items: [
+      {
+        question: "What is an AI credit?",
+        answer:
+          "Credits are what Helpperr spends when its AI turns your recordings into documentation. Every plan includes a set number of credits — on the Free plan a single generation can use up to 30.",
+        defaultOpen: true,
+      },
+      {
+        question: "Do I need a credit card to start?",
+        answer:
+          "No. The Free plan gives you 100 credits for 14 days, or until the credits run out, with no credit card required.",
+        defaultOpen: false,
+      },
+      {
+        question: "What happens when I run out of credits?",
+        answer:
+          "On Pro and Team you can top up anytime: 1,000 credits for $20 or 3,000 credits for $45.",
+        defaultOpen: false,
+      },
+      {
+        question: "Do unused credits roll over?",
+        answer:
+          "Plan credits refresh every month. Purchased top-up credits are separate — they stay valid for 12 months and roll over independently, so they're never lost when your monthly credits reset.",
+        defaultOpen: false,
+      },
+      {
+        question: "What happens to my guides when the trial ends?",
+        answer:
+          "You can still view and share every guide you created during the trial. Upgrade to Pro or Team to keep generating new ones.",
+        defaultOpen: false,
+      },
+      {
+        question: "How does Team billing work?",
+        answer:
+          "Team is $25 per seat per month, from 2 to 15 seats. Each seat adds 1,200 credits to a shared pool the whole workspace can use, and the plan is billed to the workspace rather than to an individual.",
+        defaultOpen: false,
+      },
+      {
+        question: "Which plan is right for me?",
+        answer:
+          "Choose Pro if you document on your own and need a steady monthly allowance. Choose Team if several people create guides and you want one shared credit pool and workspace billing.",
+        defaultOpen: false,
+      },
+      {
+        question: "We need more than 15 seats. What are our options?",
+        answer:
+          "Book a demo and tell us about your team — we'll help you find the right setup.",
+        defaultOpen: false,
+      },
+    ],
+  },
+};
+
+// "Ask a Question" card shown under every FAQ heading, linking to /contact.
+export const FAQ_ASK = {
+  title: "Ask a Question",
+  body: "Can't find what you're looking for? Contact us and our team will get back to you promptly.",
+  cta: "Ask a Question",
+  href: "/contact",
+};
+
+// Contact page (/contact). The form has no backend yet — submitting shows a
+// confirmation only, like the Book a Demo modal.
+export const CONTACT_PAGE = {
+  badge: "CONTACT",
+  heading: "Let's talk",
+  sub: "Questions about Helpperr, plans or your team's setup? Send us a message and we'll get back to you by email.",
+  topics: ["General question", "Pricing & plans", "Team or enterprise", "Technical support"],
+  side: [
+    {
+      icon: "CalendarDays",
+      title: "Prefer a walkthrough?",
+      body: "Book a demo and we'll show you Helpperr on your own workflows.",
+      cta: "Book a Demo",
+      action: "demo",
+    },
+    {
+      icon: "CircleHelp",
+      title: "Browse the FAQs",
+      body: "Quick answers about credits, plans, exports and teams.",
+      cta: "Read the FAQs",
+      action: "/#faq",
+    },
+  ],
+  success: {
+    title: "Message sent",
+    body: "Thanks for reaching out — our team will reply by email shortly.",
+  },
 };

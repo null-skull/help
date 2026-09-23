@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Check } from "lucide-react";
 import { FOOTER } from "@/lib/home-new-content";
 import Section from "@/components/home-new/Section";
 import Reveal from "@/components/Reveal";
-import { scrollToSection } from "@/lib/lenis";
+import { handleSiteLinkClick } from "@/lib/site-links";
 import { openBookDemo } from "@/lib/book-demo-modal";
 
 const SOCIAL_ICONS = [
@@ -15,6 +17,8 @@ const SOCIAL_ICONS = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
   return (
     <footer className="tone-lime relative isolate overflow-hidden bg-page">
       <div aria-hidden className="footer-blobs">
@@ -108,7 +112,7 @@ export default function Footer() {
               <div key={col.title} className="flex flex-col gap-5">
                 <span className="text-title font-medium text-fg">{col.title}</span>
                 {col.links.map((link) => (
-                  <a
+                  <Link
                     key={link.label}
                     href={link.href}
                     onClick={(e) => {
@@ -117,14 +121,12 @@ export default function Footer() {
                         openBookDemo();
                         return;
                       }
-                      if (!link.href.startsWith("#")) return;
-                      e.preventDefault();
-                      scrollToSection(link.href);
+                      handleSiteLinkClick(e, link.href, pathname);
                     }}
                     className="w-fit cursor-pointer text-sm text-fg-muted transition-colors hover:text-fg"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             ))}

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Nav from "@/components/home-new/Nav";
+import Footer from "@/components/home-new/Footer";
+import BookDemoModal from "@/components/home-new/BookDemoModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,9 +19,12 @@ const bricolage = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  title: "Helpperr — Create Professional Documentation in Minutes with AI",
+  title: {
+    default: "Helpperr — Professional Documentation, Built in Minutes",
+    template: "%s — Helpperr",
+  },
   description:
-    "Capture Once. Help Forever. Helpperr turns any workflow recording into structured, AI-generated documentation instantly.",
+    "Record any workflow with our Chrome extension. Helpperr's AI instantly transforms it into polished, searchable, reusable documentation - no writing required.",
   icons: {
     icon: "/favicon.png",
   },
@@ -28,7 +34,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable} antialiased`}>
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          {/* Shared site chrome: every page gets the nav, footer and the
+              Book a Demo modal (opened from anywhere via openBookDemo()). */}
+          <div className="home-new min-h-screen bg-page font-display text-fg">
+            <Nav />
+            <main>{children}</main>
+            <Footer />
+            <BookDemoModal />
+          </div>
+        </SmoothScroll>
       </body>
     </html>
   );

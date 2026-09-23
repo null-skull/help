@@ -53,8 +53,11 @@ export default function UseCases() {
           return (
             <div
               key={item.label}
-              className="flex flex-col items-start gap-4 rounded-2xl border border-line bg-card p-5 transition-colors hover:border-accent/50 hover:bg-card-hover"
+              className="group relative isolate flex flex-col items-start gap-4 overflow-hidden rounded-2xl border border-line-strong bg-gradient-to-br from-line-strong to-card-2 p-5 transition-colors hover:border-accent/50"
             >
+              {/* Same slate + checker-tile surface as the FAQ "Ask a Question"
+                  card, with the tiles toned down to 40% (brighter on hover). */}
+              <span aria-hidden className="card-tiles card-tiles-sm absolute inset-0 -z-10 opacity-40 transition-opacity duration-300 group-hover:opacity-70" />
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/10">
                 <Icon size={20} className="text-accent" />
               </span>

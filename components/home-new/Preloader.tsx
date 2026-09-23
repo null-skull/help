@@ -13,23 +13,34 @@ const WAVE_SVG = `data:image/svg+xml,${encodeURIComponent(
   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'><path d='M0 60 Q50 15 100 60 T200 60 V100 H0 Z' fill='white'/></svg>"
 )}`;
 
+// The intro plays once per page load. Client-side navigation back to the home
+// page (e.g. from /pricing) remounts this component, and replaying a ~3s
+// loading screen there would feel broken.
+let hasPlayed = false;
+
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(hasPlayed);
   const rootRef = useRef<HTMLDivElement>(null);
 
   // Layout effects run for the WHOLE tree, before any component's regular
   // effect runs — so this is guaranteed to flip the gate closed before
   // Hero/Reveal/etc. get a chance to start their own entrance animations.
   useLayoutEffect(() => {
+    if (hasPlayed) return;
     beginPreload();
+    // If the visitor navigates away mid-intro, release the gate so the next
+    // page's entrance animations aren't left waiting forever.
+    return () => completePreload();
   }, []);
 
   useEffect(() => {
+    if (hasPlayed) return;
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const finish = () => {
+      hasPlayed = true;
       setHidden(true);
       document.body.style.overflow = original;
       completePreload();
