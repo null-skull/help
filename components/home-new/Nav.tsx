@@ -20,11 +20,11 @@ export default function Nav() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#2c2c2c] bg-[#0a0a0a]">
+    <header className="sticky top-0 z-50 border-b border-line bg-page">
       <Section>
-        <div className="flex items-center gap-10 px-5 py-3.5 sm:px-10">
-        <div className="w-40 shrink-0">
-          <Image src="/home-new/icons/Layer_1.svg" alt="helpperr" width={260} height={30}/>
+        <div className="flex items-center gap-split px-gutter py-3.5">
+        <div className="w-logo shrink-0">
+          <Image src="/home-new/icons/white.svg" alt="helpperr" width={260} height={30}/>
         </div>
 
         <nav className="hidden flex-1 items-center lg:flex">
@@ -37,18 +37,18 @@ export default function Nav() {
                 e.preventDefault();
                 scrollToSection(link.href);
               }}
-              className={`group relative cursor-pointer p-6 text-base font-medium transition-colors hover:text-white ${
-                i === 0 ? "text-white" : "text-white/60"
+              className={`group relative cursor-pointer px-nav-link py-6 text-base font-medium transition-colors hover:text-fg ${
+                i === 0 ? "text-fg" : "text-fg-muted"
               }`}
             >
               {link.label}
-              <span className="absolute bottom-4 left-6 right-6 h-px origin-left scale-x-0 bg-white transition-transform duration-300 ease-out group-hover:scale-x-100" />
+              <span className="absolute bottom-4 inset-x-nav-link h-px origin-left scale-x-0 bg-fg transition-transform duration-300 ease-out group-hover:scale-x-100" />
             </a>
           ))}
         </nav>
 
         <div className="ml-auto hidden lg:block">
-          <button className="cursor-pointer rounded-full bg-accent-primary px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.03] hover:opacity-90 active:scale-[0.98]">
+          <button className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]">
             Get Started
           </button>
         </div>
@@ -56,15 +56,15 @@ export default function Nav() {
         <button
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((v) => !v)}
-          className="ml-auto cursor-pointer text-white lg:hidden"
+          className="ml-auto cursor-pointer text-fg lg:hidden"
         >
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {menuOpen && (
-        <div className="absolute inset-x-0 top-full min-h-screen overflow-y-auto border-t border-[#2c2c2c] bg-[#0a0a0a] lg:hidden">
-          <div className="flex flex-col gap-1 px-5 py-4">
+        <div data-lenis-prevent className="absolute inset-x-0 top-full h-[calc(100dvh-100%)] overflow-y-auto overscroll-contain border-t border-line bg-page lg:hidden">
+          <div className="flex flex-col gap-1 px-gutter py-4">
             {NAV_LINKS.map((link, i) => (
               <a
                 key={link.label}
@@ -76,7 +76,7 @@ export default function Nav() {
                   scrollToSection(link.href);
                 }}
                 className={`cursor-pointer rounded-lg px-3 py-3 text-base font-medium ${
-                  i === 0 ? "text-white" : "text-white/60"
+                  i === 0 ? "text-fg" : "text-fg-muted"
                 }`}
               >
                 {link.label}
@@ -84,7 +84,7 @@ export default function Nav() {
             ))}
             <button
               onClick={() => setMenuOpen(false)}
-              className="mt-2 cursor-pointer rounded-full bg-accent-primary px-6 py-3 text-base font-medium text-white transition-transform active:scale-[0.98]"
+              className="mt-2 cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:bg-white active:scale-[0.98]"
             >
               Get Started
             </button>

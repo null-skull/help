@@ -10,7 +10,7 @@ export default function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={`mx-auto w-full max-w-[1440px] border-x border-[#2c2c2c] ${className}`}>
+    <section id={id} className={`mx-auto w-full max-w-site border-x border-line ${className}`}>
       {children}
     </section>
   );

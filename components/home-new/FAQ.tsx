@@ -11,37 +11,37 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(defaultIndex === -1 ? 0 : defaultIndex);
 
   return (
-    <Section id="faq" className="flex flex-col gap-10 border-b px-5 py-16 sm:px-10 lg:flex-row lg:gap-6 lg:py-20">
-      <Reveal as="div" className="flex max-w-[800px] flex-1 flex-col gap-4">
-        <h2 className="text-3xl font-medium leading-[1.1] text-white sm:text-4xl lg:text-[40px]">
+    <Section id="faq" className="tone-cyan flex flex-col gap-10 border-b px-gutter py-section lg:flex-row lg:gap-split">
+      <Reveal as="div" className="flex max-w-heading flex-1 flex-col gap-4">
+        <h2 className="text-h2 font-medium leading-[1.1] text-fg">
           {FAQ.heading}
         </h2>
-        <p className="text-lg leading-relaxed text-white/60">{FAQ.sub}</p>
+        <p className="text-lead leading-relaxed text-fg-muted">{FAQ.sub}</p>
       </Reveal>
 
       <Reveal
         selector=":scope > div"
-        className="flex flex-1 flex-col gap-6 rounded-2xl px-4 py-6 sm:px-8"
+        className="flex flex-1 flex-col gap-6 rounded-2xl px-inset py-6"
       >
         {FAQ.items.map((item, index) => {
           const isOpen = index === openIndex;
           return (
             <div key={item.question}>
-              {index > 0 && <div className="mb-6 h-px w-full bg-[#2c2c2c]" />}
+              {index > 0 && <div className="mb-6 h-px w-full bg-line" />}
               <button
                 onClick={() => setOpenIndex(isOpen ? -1 : index)}
                 className="flex w-full cursor-pointer items-center justify-between gap-4 py-2 text-left"
                 aria-expanded={isOpen}
               >
                 <span
-                  className={`text-xl font-medium transition-colors ${isOpen ? "text-white" : "text-white/60"}`}
+                  className={`text-title font-medium transition-colors ${isOpen ? "text-fg" : "text-fg-muted"}`}
                 >
                   {item.question}
                 </span>
                 <ChevronDown
                   size={24}
                   className={`shrink-0 transition-transform duration-300 ${
-                    isOpen ? "rotate-180 text-white" : "text-white/60"
+                    isOpen ? "rotate-180 text-accent" : "text-fg-muted"
                   }`}
                 />
               </button>
@@ -51,7 +51,7 @@ export default function FAQSection() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="text-base leading-relaxed text-white/60">{item.answer}</p>
+                  <p className="text-base leading-relaxed text-fg-muted">{item.answer}</p>
                 </div>
               </div>
             </div>

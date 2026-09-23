@@ -50,7 +50,7 @@ export default function BookDemoModal() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[90] flex items-center justify-center px-4">
+    <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
       <div
         ref={backdropRef}
         aria-hidden
@@ -60,44 +60,45 @@ export default function BookDemoModal() {
 
       <div
         ref={panelRef}
+        data-lenis-prevent
         role="dialog"
         aria-modal="true"
         aria-labelledby="book-demo-title"
-        className="relative w-full max-w-md rounded-2xl border border-[#2c2c2c] bg-[#141414] p-6 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)] sm:p-8"
+        className="relative max-h-[calc(100dvh-2rem)] w-full max-w-modal overflow-y-auto overscroll-contain rounded-2xl border border-line bg-card p-card shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]"
       >
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close"
-          className="absolute right-4 top-4 cursor-pointer text-white/50 transition-colors hover:text-white"
+          className="absolute right-4 top-4 cursor-pointer text-fg-muted/80 transition-colors hover:text-fg"
         >
           <X size={20} />
         </button>
 
         {submitted ? (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <span className="flex size-12 items-center justify-center rounded-full bg-gradient-to-r from-[#3B82F6] to-[#5B21B6]">
+            <span className="flex size-12 items-center justify-center rounded-full bg-accent">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M5 13l4 4L19 7"
-                  stroke="white"
+                  stroke="var(--hn-bg)"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </span>
-            <h3 className="text-xl font-medium text-white">Request received</h3>
-            <p className="text-sm leading-relaxed text-white/60">
+            <h3 className="text-title font-medium text-fg">Request received</h3>
+            <p className="text-sm leading-relaxed text-fg-muted">
               Thanks for reaching out — our team will follow up by email shortly.
             </p>
           </div>
         ) : (
           <>
-            <h3 id="book-demo-title" className="text-2xl font-medium text-white">
+            <h3 id="book-demo-title" className="text-2xl font-medium text-fg">
               Book a Demo
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-white/60">
+            <p className="mt-2 text-sm leading-relaxed text-fg-muted">
               Tell us a bit about yourself and we&apos;ll get back to you shortly.
             </p>
 
@@ -109,7 +110,7 @@ export default function BookDemoModal() {
               }}
             >
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="demo-name" className="text-sm font-medium text-white">
+                <label htmlFor="demo-name" className="text-sm font-medium text-fg">
                   Name
                 </label>
                 <input
@@ -118,12 +119,12 @@ export default function BookDemoModal() {
                   type="text"
                   required
                   placeholder="Jane Doe"
-                  className="rounded-lg border border-[#2c2c2c] bg-[#0a0a0a] px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-[#3B82F6]"
+                  className="rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="demo-email" className="text-sm font-medium text-white">
+                <label htmlFor="demo-email" className="text-sm font-medium text-fg">
                   Email
                 </label>
                 <input
@@ -132,26 +133,26 @@ export default function BookDemoModal() {
                   type="email"
                   required
                   placeholder="jane@company.com"
-                  className="rounded-lg border border-[#2c2c2c] bg-[#0a0a0a] px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-[#3B82F6]"
+                  className="rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="demo-message" className="text-sm font-medium text-white">
-                  Message <span className="text-white/40">(optional)</span>
+                <label htmlFor="demo-message" className="text-sm font-medium text-fg">
+                  Message <span className="text-fg-muted/70">(optional)</span>
                 </label>
                 <textarea
                   id="demo-message"
                   name="message"
                   rows={3}
                   placeholder="What would you like to see?"
-                  className="resize-none rounded-lg border border-[#2c2c2c] bg-[#0a0a0a] px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:border-[#3B82F6]"
+                  className="resize-none rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 cursor-pointer rounded-full bg-accent-primary px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.02] hover:opacity-90 active:scale-[0.98]"
+                className="mt-2 cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
               >
                 Send Request
               </button>

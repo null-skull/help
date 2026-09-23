@@ -14,9 +14,23 @@
   --text-muted: #6b6560;
   --text-dim: #999999;
   --accent-blue: #2572ed;
-  /* Primary button color for the dark home-new page — change here to
-     re-theme every "Book a Demo" / "Get Started" button at once. */
-  --accent-primary: #1f16b3;
+
+  /* Dark home-new palette — change a value here to re-theme that role
+     across the whole /home-new page. */
+  --hn-bg: #070b10;
+  --hn-primary: #6d5ef5;
+  --hn-primary-hover: #7c6fff;
+  --hn-primary-soft: #17142a;
+  --hn-text: #f5f5f5;
+  --hn-text-2: #a1a1aa;
+  --hn-border: #242424;
+  --hn-card: #13171e;
+  /* Section accents — each home-new section picks ONE of these (via the
+     .tone-* classes below) for its tag, icons, lines and highlights. */
+  --hn-yellow: #f9eb57;
+  --hn-lime: #c6f56f;
+  --hn-cyan: #83e7ee;
+  --hn-peach: #ffb9a2;
   --r-sm: 8px;
   --r-md: 14px;
   --r-lg: 24px;
@@ -41,9 +55,53 @@
   --color-text-muted: var(--text-muted);
   --color-text-dim: var(--text-dim);
   --color-accent-blue: var(--accent-blue);
-  --color-accent-primary: var(--accent-primary);
+  --color-page: var(--hn-bg);
+  --color-primary: var(--hn-primary);
+  --color-primary-hover: var(--hn-primary-hover);
+  --color-primary-soft: var(--hn-primary-soft);
+  --color-fg: var(--hn-text);
+  --color-fg-muted: var(--hn-text-2);
+  --color-line: var(--hn-border);
+  --color-card: var(--hn-card);
+  --color-accent: var(--accent, var(--hn-cyan));
   --font-sans: var(--font-inter);
   --font-display: var(--font-bricolage);
+
+  /* Fluid sizing for the home-new page. Each clamp() lands on the original
+     desktop size at a 1440px viewport, shrinks toward the min on phones and
+     grows gently toward the max on 2K/4K screens — so breakpoints are only
+     needed for real layout changes, never for type or spacing. */
+  --text-display: clamp(2.25rem, 1.6rem + 3.4vw, 5.0rem);
+  --text-h2: clamp(1.875rem, 1.6rem + 1vw, 2.75rem);
+  --text-h3: clamp(1.5rem, 1.35rem + 0.6vw, 2rem);
+  --text-price: clamp(2rem, 1.8rem + 0.6vw, 2.5rem);
+  --text-title: clamp(1.125rem, 1rem + 0.28vw, 1.375rem);
+  --text-lead: clamp(1rem, 0.95rem + 0.2vw, 1.25rem);
+  --text-preloader: clamp(2.5rem, 7vw + 0.5rem, 11rem);
+
+  --spacing-gutter: clamp(1.25rem, 0.8rem + 1.8vw, 3.5rem);
+  --spacing-section: clamp(4rem, 3.4rem + 1.8vw, 7rem);
+  --spacing-section-lg: clamp(4rem, 2rem + 6vw, 10rem);
+  --spacing-stack: clamp(2.5rem, 2rem + 2.2vw, 5rem);
+  --spacing-split: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
+  --spacing-card: clamp(1.25rem, 1rem + 1vw, 2.5rem);
+  --spacing-grid: clamp(1rem, 0.75rem + 0.8vw, 2rem);
+  --spacing-inset: clamp(1rem, 0.6rem + 1.2vw, 2.5rem);
+  --spacing-btn-x: clamp(1.25rem, 1rem + 0.6vw, 1.75rem);
+  --spacing-btn-y: clamp(0.625rem, 0.55rem + 0.25vw, 0.875rem);
+  --spacing-nav-link: clamp(0.75rem, 0.2rem + 1.4vw, 1.75rem);
+  --spacing-logo: clamp(7.5rem, 6rem + 4.5vw, 11rem);
+  --spacing-node: clamp(7.5rem, 6rem + 2vw, 9.5rem);
+  --spacing-hub: clamp(6rem, 4.5rem + 2.8vw, 8.5rem);
+  --spacing-hub-diagram: clamp(32rem, 40vw, 48rem);
+  --spacing-steps-diagram: clamp(26rem, 32vw, 35rem);
+  --spacing-sticky-panel: min(75vh, clamp(28rem, 40vw, 48rem));
+
+  --container-site: clamp(90rem, 75vw, 110rem);
+  --container-mockup: clamp(64rem, 60vw, 80rem);
+  --container-feature-copy: clamp(28rem, 38vw, 40rem);
+  --container-modal: clamp(26rem, 24rem + 8vw, 32rem);
+  --container-heading: clamp(50rem, 40vw, 64rem);
 }
 
 * {
@@ -58,6 +116,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Safety net against stray horizontal overflow. `clip` (unlike `hidden`)
+     doesn't create a scroll container, so position: sticky keeps working. */
+  overflow-x: clip;
 }
 
 .font-display {
@@ -94,6 +155,187 @@ body {
 
 .shadow-elevation-xl {
   box-shadow: var(--shadow-xl);
+}
+
+/* Home-new scrollbar: yellow thumb on the dark page background. Scoped via
+   :has() to pages that render .home-new, so the light / page keeps its
+   default scrollbar; also covers inner scroll areas (mobile menu, modal,
+   seat picker). scrollbar-color is only the fallback for browsers without
+   ::-webkit-scrollbar (Firefox) — in Chromium, setting it would override
+   and disable the webkit styles below. */
+@supports not selector(::-webkit-scrollbar) {
+  html:has(.home-new),
+  .home-new * {
+    scrollbar-color: var(--hn-yellow) var(--hn-bg);
+    scrollbar-width: thin;
+  }
+}
+
+html:has(.home-new)::-webkit-scrollbar,
+.home-new ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+html:has(.home-new)::-webkit-scrollbar-track,
+.home-new ::-webkit-scrollbar-track {
+  background: var(--hn-bg);
+}
+
+html:has(.home-new)::-webkit-scrollbar-thumb,
+.home-new ::-webkit-scrollbar-thumb {
+  background: var(--hn-yellow);
+  /* border: 2px solid var(--hn-bg); */
+  border-radius: 999px;
+  width: 4px;
+}
+
+html:has(.home-new)::-webkit-scrollbar-thumb:hover,
+.home-new ::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--hn-yellow) 85%, white);
+}
+
+/* Per-section accent. Set one of these on a section and every *-accent
+   utility inside it (text-accent, bg-accent/10, border-accent/40, …) picks
+   up that color through the inherited --accent variable. */
+.tone-yellow {
+  --accent: var(--hn-yellow);
+}
+
+.tone-lime {
+  --accent: var(--hn-lime);
+}
+
+.tone-cyan {
+  --accent: var(--hn-cyan);
+}
+
+.tone-peach {
+  --accent: var(--hn-peach);
+}
+
+/* Colored halo in the current section accent (kept as plain classes, not
+   shadow-[…] arbitrary values — see the Lightning CSS note above). */
+.tone-glow {
+  box-shadow: 0 20px 60px -10px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.tone-glow-soft {
+  box-shadow: 0 20px 60px -20px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* CTA backdrop: the top cap of a huge circle whose rim glows in --hn-yellow,
+   read as a luminous dome rising behind the heading (::before), topped by a
+   frosted-glass sheet of the same shape (::after) that blurs the glow and
+   adds a thin highlight along the arc. The whole layer sits at low opacity
+   so it tints the section rather than dominating it. */
+.cta-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.cta-glow::before,
+.cta-glow::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: clamp(3rem, 8vw, 7rem);
+  width: max(120%, 80rem);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+}
+
+.cta-glow::before {
+  background:
+    radial-gradient(
+      circle at center,
+      color-mix(in oklab, var(--hn-yellow) 35%, transparent) 0%,
+      color-mix(in oklab, var(--hn-yellow) 20%, transparent) 25%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 45%,
+      color-mix(in oklab, var(--hn-yellow) 18%, var(--hn-bg)) 70%,
+      transparent 100%
+    );
+
+  filter: blur(clamp(30px, 5vw, 80px));
+  transform: scale(1.15);
+}
+
+.cta-glow::after {
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 55%
+    );
+
+  -webkit-backdrop-filter: blur(40px) saturate(130%);
+  backdrop-filter: blur(40px) saturate(130%);
+
+  filter: blur(20px);
+}
+
+/* Footer backdrop: two soft, heavily blurred blobs in two different
+   section accents — a cyan oval in the top-right corner and a lime star in
+   the bottom-left — kept at low opacity so they tint the footer without
+   competing with it. */
+.footer-blobs {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.footer-blob {
+  position: absolute;
+  filter: blur(clamp(40px, 5vw, 100px));
+}
+
+.footer-blob--a {
+  top: -12%;
+  right: -8%;
+  width: clamp(16rem, 32vw, 38rem);
+  aspect-ratio: 1.3;
+  border-radius: 50%;
+  background: linear-gradient(
+    120deg,
+    color-mix(in oklab, var(--hn-cyan) 70%, #3b5bff) 0%,
+    var(--hn-cyan) 60%,
+    color-mix(in oklab, var(--hn-cyan) 60%, white) 100%
+  );
+}
+
+/* The star is clipped on a pseudo-element so the blur on the parent
+   softens its edges (a filter on the clipped element itself would be
+   clipped back to hard edges). */
+.footer-blob--b {
+  bottom: -18%;
+  left: -10%;
+  width: clamp(18rem, 34vw, 40rem);
+  aspect-ratio: 1;
+}
+
+.footer-blob--b::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    200deg,
+    var(--hn-cyan) 0%,
+    var(--hn-lime) 55%,
+    color-mix(in oklab, var(--hn-lime) 70%, var(--hn-yellow)) 100%
+  );
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
 
 @keyframes fadeIn {

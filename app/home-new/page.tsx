@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function HomeNew() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] font-display text-white">
+    <div className="home-new min-h-screen bg-page font-display text-fg">
       <Preloader />
       <Nav />
       <AnnouncementBar />

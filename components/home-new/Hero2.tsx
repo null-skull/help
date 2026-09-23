@@ -52,36 +52,36 @@ export default function Hero2() {
   }, []);
 
   return (
-    <Section id="product-showcase" className="border-b px-5 py-16 sm:px-10 lg:py-20">
-      <Reveal as="div" selector="*" className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
-        <h2 className="text-3xl font-medium leading-[1.1] text-white sm:text-4xl lg:text-[40px]">
+    <Section id="product-showcase" className="border-b px-gutter py-section">
+      <Reveal as="div" selector="*" className="mx-auto flex max-w-[min(100%,42em)] flex-col items-center gap-4 text-center text-lead">
+        <h2 className="text-h2 font-medium leading-[1.1] text-fg">
           {HERO2.heading}
         </h2>
-        <p className="text-lg leading-relaxed text-white/60">{HERO2.sub}</p>
-        <div className="flex flex-wrap justify-center gap-6 pt-2">
+        <p className="text-lead leading-relaxed text-fg-muted">{HERO2.sub}</p>
+        <div className="flex flex-wrap justify-center gap-4 pt-2 sm:gap-6">
           <button
             onClick={openBookDemo}
-            className="cursor-pointer rounded-full bg-accent-primary px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.03] hover:opacity-90 active:scale-[0.98]"
+            className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]"
           >
             {HERO2.primaryCta}
           </button>
-          <button className="cursor-pointer rounded-full border border-white px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.03] hover:bg-white hover:text-[#0a0a0a] active:scale-[0.98]">
+          <button className="cursor-pointer rounded-full border border-fg px-btn-x py-btn-y text-base font-medium text-fg transition-transform hover:scale-[1.03] hover:bg-fg hover:text-page active:scale-[0.98]">
             {HERO2.secondaryCta}
           </button>
         </div>
       </Reveal>
 
-      <Reveal as="div" className="mt-16">
-        <div className="mx-auto max-w-5xl">
+      <Reveal as="div" className="mt-stack">
+        <div className="mx-auto max-w-mockup">
           <div
             ref={mockupRef}
-            className="overflow-hidden rounded-2xl border border-[#2c2c2c] bg-[#141414] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)] will-change-transform"
+            className="overflow-hidden rounded-2xl border border-line bg-card shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)] will-change-transform"
           >
-            <div className="flex items-center gap-2 border-b border-[#2c2c2c] bg-[#0f0f0f] px-4 py-3">
+            <div className="flex items-center gap-2 border-b border-line bg-page px-4 py-3">
               <span className="size-3 rounded-full" style={{ background: "#FF5F57" }} />
               <span className="size-3 rounded-full" style={{ background: "#FFBD2E" }} />
               <span className="size-3 rounded-full" style={{ background: "#28CA41" }} />
-              <div className="ml-3 rounded-md bg-[#0a0a0a] px-3 py-1 text-xs text-white/40">
+              <div className="ml-3 rounded-md bg-card px-3 py-1 text-xs text-fg-muted/70">
                 helpperr.com
               </div>
             </div>

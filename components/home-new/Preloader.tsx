@@ -6,7 +6,7 @@ import { beginPreload, completePreload } from "@/lib/preloader-gate";
 
 const WORDMARK = "Helpperr";
 const TEXT_CLASSES =
-  "block select-none text-[10vw] font-extrabold leading-none tracking-tight sm:text-[7vw]";
+  "block select-none text-preloader font-extrabold leading-none tracking-tight";
 
 // A single wave period as an inline SVG, tiled horizontally via background-repeat.
 const WAVE_SVG = `data:image/svg+xml,${encodeURIComponent(
@@ -70,11 +70,11 @@ export default function Preloader() {
   if (hidden) return null;
 
   return (
-    <div ref={rootRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0a]" aria-hidden>
+    <div ref={rootRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-page" aria-hidden>
       <div>
         <div className="relative inline-block">
           {/* Empty / unfilled wordmark */}
-          <span className={`${TEXT_CLASSES} text-white/15`}>{WORDMARK}</span>
+          <span className={`${TEXT_CLASSES} text-fg/15`}>{WORDMARK}</span>
 
           {/* Water-filled wordmark: clipped from the bottom up as progress climbs.
               Both the solid fill and the wave riding its edge are real text —
@@ -84,7 +84,7 @@ export default function Preloader() {
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}
           >
-            <span className={`${TEXT_CLASSES} text-white`}>{WORDMARK}</span>
+            <span className={`${TEXT_CLASSES} text-fg`}>{WORDMARK}</span>
 
             <span
               className={`${TEXT_CLASSES} preloader-wave-mask absolute inset-0 bg-repeat-x bg-clip-text text-transparent`}
@@ -100,8 +100,8 @@ export default function Preloader() {
         </div>
 
         <div className="mt-2 flex justify-end gap-2 text-sm">
-          <span className="text-white/50">loading...</span>
-          <span className="font-medium text-white">{progress}%</span>
+          <span className="text-fg-muted/80">loading...</span>
+          <span className="font-medium text-fg">{progress}%</span>
         </div>
       </div>
     </div>

@@ -33,18 +33,18 @@ function SeatSelect({ seats, onChange }: { seats: number; onChange: (n: number) 
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex cursor-pointer items-center gap-2 rounded-lg border border-[#2c2c2c] bg-[#0a0a0a] px-3 py-2 text-sm font-medium text-white transition-colors hover:border-white"
+        className="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-page px-3 py-2 text-sm font-medium text-fg transition-colors hover:border-accent"
       >
-        <Users size={14} className="text-white/60" />
+        <Users size={14} className="text-fg-muted" />
         {seats}
-        <ChevronDown size={14} className={`text-white/60 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown size={14} className={`text-fg-muted transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
         <ul
           role="listbox"
           data-lenis-prevent
-          className="absolute right-0 top-full z-10 mt-2 max-h-56 w-24 overflow-y-auto overscroll-contain rounded-lg border border-[#2c2c2c] bg-[#141414] py-1 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)]"
+          className="absolute right-0 top-full z-10 mt-2 max-h-56 w-24 overflow-y-auto overscroll-contain rounded-lg border border-line bg-card py-1 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)]"
         >
           {SEAT_OPTIONS.map((n) => (
             <li key={n}>
@@ -57,7 +57,7 @@ function SeatSelect({ seats, onChange }: { seats: number; onChange: (n: number) 
                   setOpen(false);
                 }}
                 className={`w-full cursor-pointer px-3 py-1.5 text-left text-sm transition-colors ${
-                  n === seats ? "bg-accent-primary text-white" : "text-white/60 hover:bg-white/5 hover:text-white"
+                  n === seats ? "bg-accent text-page" : "text-fg-muted hover:bg-accent/10 hover:text-fg"
                 }`}
               >
                 {n}
@@ -81,19 +81,19 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
 
   return (
     <div
-      className={`flex flex-col gap-6 rounded-2xl border p-8 ${
+      className={`flex flex-col gap-6 rounded-2xl border p-card ${
         plan.highlight
-          ? "border-accent-primary bg-[#141414] shadow-[0_20px_60px_-20px_rgba(31,22,179,0.5)]"
-          : "border-[#2c2c2c] bg-[#141414]"
+          ? "border-accent bg-card tone-glow-soft"
+          : "border-line bg-card"
       }`}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-lg font-medium text-white">{plan.name}</span>
+        <span className="text-lead font-medium text-fg">{plan.name}</span>
         {isTeam ? (
           <SeatSelect seats={seats} onChange={setSeats} />
         ) : (
           plan.highlight && (
-            <span className="rounded-full bg-accent-primary px-3 py-1 text-xs font-medium uppercase tracking-widest text-white">
+            <span className="rounded-full bg-accent px-3 py-1 text-xs font-medium uppercase tracking-widest text-page">
               Most Popular
             </span>
           )
@@ -101,29 +101,29 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-medium text-white">{plan.price}</span>
-          <span className="text-sm text-white/60">{isTeam ? "/ user / month" : plan.period}</span>
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span className="text-price font-medium text-fg">{plan.price}</span>
+          <span className="text-sm text-fg-muted">{isTeam ? "/ user / month" : plan.period}</span>
         </div>
-        <p className="text-sm text-white/60">{plan.description}</p>
+        <p className="text-sm text-fg-muted">{plan.description}</p>
         {isTeam && (
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-fg-muted/70">
             ${totalPrice}/month total for {seats} seats · {teamConfig.min}–{teamConfig.max} users
           </p>
         )}
       </div>
 
-      <div className="flex flex-col gap-1 border-y border-[#2c2c2c] py-4">
-        <span className="text-2xl font-medium text-white">
+      <div className="flex flex-col gap-1 border-y border-line py-4">
+        <span className="text-2xl font-medium text-fg">
           {isTeam ? `${totalCredits!.toLocaleString()} credits` : plan.credits}
         </span>
-        <span className="text-xs text-white/40">{plan.creditsNote}</span>
+        <span className="text-xs text-fg-muted/70">{plan.creditsNote}</span>
       </div>
 
       <ul className="flex flex-col gap-3">
         {plan.features.map((feature) => (
-          <li key={feature} className="flex items-start gap-3 text-sm text-white/60">
-            <Check size={16} className="mt-0.5 shrink-0 text-accent-primary" />
+          <li key={feature} className="flex items-start gap-3 text-sm text-fg-muted">
+            <Check size={16} className="mt-0.5 shrink-0 text-accent" />
             {feature}
           </li>
         ))}
@@ -131,10 +131,10 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
 
       <button
         onClick={openBookDemo}
-        className={`mt-auto cursor-pointer rounded-full px-6 py-3 text-base font-medium transition-transform hover:scale-[1.03] active:scale-[0.98] ${
+        className={`mt-auto cursor-pointer rounded-full px-btn-x py-btn-y text-base font-medium transition-transform hover:scale-[1.03] active:scale-[0.98] ${
           plan.highlight
-            ? "bg-accent-primary text-white hover:opacity-90"
-            : "border border-white text-white hover:bg-white hover:text-[#0a0a0a]"
+            ? "bg-fg text-page hover:bg-white"
+            : "border border-fg text-fg hover:bg-fg hover:text-page"
         }`}
       >
         {plan.cta}
@@ -145,13 +145,13 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
 
 export default function Pricing() {
   return (
-    <Section id="pricing" className="flex flex-col gap-16 border-b px-5 py-16 sm:px-10 lg:py-20">
-      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
+    <Section id="pricing" className="tone-yellow flex flex-col gap-stack border-b px-gutter py-section">
+      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-split">
         <div className="flex flex-col gap-4">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-dashed border-[#2c2c2c] px-3 py-1 text-xs font-medium uppercase tracking-widest text-white/60">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
             {PRICING.badge}
           </span>
-          <h2 className="max-w-xl text-3xl font-medium leading-[1.1] text-white sm:text-4xl lg:text-[40px]">
+          <h2 className="max-w-xl text-h2 font-medium leading-[1.1] text-fg">
             {PRICING.heading.map((line, i) => (
               <span key={i} className="block">
                 {line}
@@ -159,10 +159,10 @@ export default function Pricing() {
             ))}
           </h2>
         </div>
-        <p className="max-w-md text-lg leading-relaxed text-white/60 lg:pt-2">{PRICING.description}</p>
+        <p className="max-w-[28em] text-lead leading-relaxed text-fg-muted lg:max-w-[min(28em,42%)] lg:pt-2">{PRICING.description}</p>
       </Reveal>
 
-      <Reveal selector=":scope > div" className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <Reveal selector=":scope > div" className="grid grid-cols-1 gap-grid md:grid-cols-2 lg:grid-cols-3 md:[&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1">
         {PRICING.plans.map((plan) => (
           <PlanCard key={plan.name} plan={plan} />
         ))}
@@ -170,20 +170,20 @@ export default function Pricing() {
 
       <Reveal
         as="div"
-        className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-dashed border-[#2c2c2c] p-6 sm:flex-row sm:items-center sm:p-8"
+        className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-dashed border-line p-card md:flex-row md:items-center"
       >
         <div className="flex flex-col gap-1">
-          <span className="text-lg font-medium text-white">{PRICING.topUps.heading}</span>
-          <p className="max-w-xl text-sm leading-relaxed text-white/60">{PRICING.topUps.description}</p>
+          <span className="text-lead font-medium text-fg">{PRICING.topUps.heading}</span>
+          <p className="max-w-xl text-sm leading-relaxed text-fg-muted">{PRICING.topUps.description}</p>
         </div>
         <div className="flex flex-wrap gap-4">
           {PRICING.topUps.items.map((item) => (
             <div
               key={item.name}
-              className="flex flex-col gap-1 rounded-xl border border-[#2c2c2c] bg-[#141414] px-5 py-3"
+              className="flex flex-col gap-1 rounded-xl border border-line bg-card px-5 py-3"
             >
-              <span className="text-sm font-medium text-white">{item.name}</span>
-              <span className="text-xs text-white/60">
+              <span className="text-sm font-medium text-fg">{item.name}</span>
+              <span className="text-xs text-fg-muted">
                 {item.credits} — {item.price}
               </span>
             </div>

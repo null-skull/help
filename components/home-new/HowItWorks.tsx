@@ -13,7 +13,6 @@ import { getGsap, prefersReducedMotion } from "@/lib/gsap";
 // its own 25%-wide quarter can never bleed into a neighboring column.
 const DOT_X = [12.5, 37.5, 62.5, 87.5];
 const DOT_Y = [8, 30, 52, 74];
-const DIAGRAM_HEIGHT = 420;
 const CONTENT_WIDTH = 22;
 
 const BULGE = 28;
@@ -68,14 +67,14 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <Section id="how-it-works" className="flex flex-col gap-16 border-b px-5 py-16 sm:px-10 lg:py-20">
-      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
+    <Section id="how-it-works" className="tone-lime flex flex-col gap-stack border-b px-gutter py-section">
+      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-split">
         <div className="flex flex-col gap-4">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-dashed border-[#2c2c2c] px-3 py-1 text-xs font-medium uppercase tracking-widest text-white/60">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
             <Workflow size={12} />
             {HOW_IT_WORKS.badge}
           </span>
-          <h2 className="max-w-xl text-3xl font-medium leading-[1.1] text-white sm:text-4xl lg:text-[40px]">
+          <h2 className="max-w-xl text-h2 font-medium leading-[1.1] text-fg">
             {HOW_IT_WORKS.heading.map((line, i) => (
               <span key={i} className="block">
                 {line}
@@ -83,11 +82,11 @@ export default function HowItWorks() {
             ))}
           </h2>
         </div>
-        <p className="max-w-md text-lg leading-relaxed text-white/60 lg:pt-2">{HOW_IT_WORKS.description}</p>
+        <p className="max-w-[28em] text-lead leading-relaxed text-fg-muted lg:max-w-[min(28em,42%)] lg:pt-2">{HOW_IT_WORKS.description}</p>
       </Reveal>
 
       {/* Desktop / tablet: staircase diagram, each step confined to its own quarter-column */}
-      <div ref={diagramRef} className="relative hidden w-full lg:block" style={{ height: DIAGRAM_HEIGHT }}>
+      <div ref={diagramRef} className="relative hidden h-steps-diagram w-full lg:block">
         <svg
           className="absolute inset-0 h-full w-full overflow-visible"
           viewBox="0 0 100 100"
@@ -120,7 +119,7 @@ export default function HowItWorks() {
           <path
             d={PATH}
             fill="none"
-            stroke="#5B21B6"
+            stroke="var(--accent)"
             strokeWidth="1.2"
             strokeDasharray="4 4"
             vectorEffect="non-scaling-stroke"
@@ -133,7 +132,7 @@ export default function HowItWorks() {
           <div key={step.number}>
             <span
               aria-hidden
-              className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
+              className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg"
               style={{ left: `${DOT_X[i]}%`, top: `${DOT_Y[i]}%` }}
             />
             <div
@@ -146,11 +145,11 @@ export default function HowItWorks() {
               }}
             >
               <Reveal as="div" className="flex flex-col gap-2">
-                <h3 className="text-xl font-medium text-white">
-                  <span className="text-white/60">{step.number}) </span>
+                <h3 className="text-title font-medium text-fg">
+                  <span className="text-accent">{step.number}) </span>
                   {step.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-white/60">{step.body}</p>
+                <p className="text-sm leading-relaxed text-fg-muted">{step.body}</p>
               </Reveal>
             </div>
           </div>
@@ -164,13 +163,13 @@ export default function HowItWorks() {
             {i > 0 && (
               <span className="absolute left-[15px] -top-8 h-8 border-l border-dashed border-[#3a3a3a]" />
             )}
-            <span className="mt-1.5 size-[11px] shrink-0 rounded-full bg-white" />
+            <span className="mt-1.5 size-[11px] shrink-0 rounded-full bg-fg" />
             <div className="flex flex-col gap-2">
-              <h3 className="text-xl font-medium text-white">
-                <span className="text-white/60">{step.number}) </span>
+              <h3 className="text-title font-medium text-fg">
+                <span className="text-accent">{step.number}) </span>
                 {step.title}
               </h3>
-              <p className="text-sm leading-relaxed text-white/60">{step.body}</p>
+              <p className="text-sm leading-relaxed text-fg-muted">{step.body}</p>
             </div>
           </div>
         ))}

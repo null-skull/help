@@ -314,6 +314,13 @@ export const FOOTER = {
   watermark: "Helpperr",
   description:
     "The AI documentation platform that turns any workflow into professional, reusable knowledge - instantly.",
+  cta: {
+    heading: ["Turn every workflow into", "documentation in minutes"],
+    sub: "Start free today — record once and let Helpperr write the guide for you.",
+    placeholder: "Enter your email",
+    button: "Get started",
+    perks: ["No credit card required", "Free Chrome extension"],
+  },
   columns: [
     {
       title: "Product",

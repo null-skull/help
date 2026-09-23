@@ -54,45 +54,46 @@ export default function Hero() {
   }, []);
 
   return (
-    <Section id="hero" className="flex flex-col gap-16 border-b px-5 pb-24 pt-24 sm:px-10 lg:flex-row lg:gap-20 lg:pt-20">
-      <div className="flex flex-col justify-between gap-16 lg:flex-1 lg:pt-10">
+    <Section id="hero" className="tone-yellow flex min-h-[820px] flex-col gap-stack border-b px-gutter py-section lg:flex-row lg:gap-split">
+      <div className="flex flex-col items-center justify-between gap-stack lg:flex-1 lg:pt-10">
+        {/* <div className="flex flex-col items-center justify-between gap-stack lg:flex-1 lg:pt-10"> */}
         <div>
           <h1
             ref={headingRef}
-            className="text-5xl font-medium leading-[1.1] text-white sm:text-6xl lg:text-[74px]"
+            className="text-display font-medium leading-[1.1] text-fg"
           >
             {HERO.heading}
           </h1>
           <div ref={restRef} className="flex flex-col items-start gap-4 pt-4">
-            <p className="max-w-xl text-lg leading-relaxed text-white/60">{HERO.sub}</p>
-            <div className="flex flex-wrap gap-6 pt-6">
+            <p className="max-w-[36em] text-lead leading-relaxed text-fg-muted">{HERO.sub}</p>
+            <div className="flex flex-wrap gap-4 pt-6 sm:gap-6">
               <button
                 onClick={openBookDemo}
-                className="cursor-pointer rounded-full bg-accent-primary px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.03] hover:opacity-90 active:scale-[0.98]"
+                className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]"
               >
                 {HERO.primaryCta}
               </button>
-              <button className="cursor-pointer rounded-full border border-white px-6 py-3 text-base font-medium text-white transition-transform hover:scale-[1.03] hover:bg-white hover:text-[#0a0a0a] active:scale-[0.98]">
+              <button className="cursor-pointer rounded-full border border-fg px-btn-x py-btn-y text-base font-medium text-fg transition-transform hover:scale-[1.03] hover:bg-fg hover:text-page active:scale-[0.98]">
                 {HERO.secondaryCta}
               </button>
             </div>
           </div>
         </div>
 
-        <div ref={stepsRef} className="flex max-w-[1280px] flex-col gap-6 sm:flex-row">
+        {/* <div ref={stepsRef} className="flex flex-col gap-6 sm:flex-row opacity-0">
           {HERO.steps.map((step) => (
             <div key={step.label} className="flex flex-1 flex-col gap-1 py-2">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-medium text-white/60">{step.number}</span>
-                <span className="text-xl font-medium text-white">{step.label}</span>
+                <span className="text-title font-medium text-accent">{step.number}</span>
+                <span className="text-title font-medium text-fg">{step.label}</span>
               </div>
-              <p className="text-sm leading-relaxed text-white/60">{step.body}</p>
+              <p className="text-sm leading-relaxed text-fg-muted">{step.body}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
-      <div className="relative hidden h-auto min-h-[400px] flex-1 overflow-hidden rounded-2xl border border-[#2c2c2c] lg:block">
+      <div className="relative hidden h-auto min-h-[400px] flex-1 overflow-hidden rounded-2xl border border-line lg:block">
         <video
           src="/home-new/Hero.mp4"
           autoPlay

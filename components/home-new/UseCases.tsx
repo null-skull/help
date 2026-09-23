@@ -30,18 +30,18 @@ const ICONS: Record<string, LucideIcon> = {
 
 export default function UseCases() {
   return (
-    <Section id="use-cases" className="flex flex-col gap-16 border-b px-5 py-16 sm:px-10 lg:py-20">
-      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
+    <Section id="use-cases" className="tone-lime flex flex-col gap-stack border-b px-gutter py-section">
+      <Reveal as="div" className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-split">
         <div className="flex flex-col gap-4">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-dashed border-[#2c2c2c] px-3 py-1 text-xs font-medium uppercase tracking-widest text-white/60">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">
             <ClipboardList size={12} />
             {USE_CASES.badge}
           </span>
-          <h2 className="max-w-xl text-3xl font-medium leading-[1.1] text-white sm:text-4xl lg:text-[40px]">
+          <h2 className="max-w-xl text-h2 font-medium leading-[1.1] text-fg">
             {USE_CASES.heading}
           </h2>
         </div>
-        <p className="max-w-md text-lg leading-relaxed text-white/60 lg:pt-2">{USE_CASES.description}</p>
+        <p className="max-w-[28em] text-lead leading-relaxed text-fg-muted lg:max-w-[min(28em,42%)] lg:pt-2">{USE_CASES.description}</p>
       </Reveal>
 
       <Reveal
@@ -53,12 +53,12 @@ export default function UseCases() {
           return (
             <div
               key={item.label}
-              className="flex flex-col items-start gap-4 rounded-2xl border border-[#2c2c2c] bg-[#141414] p-5 transition-colors hover:border-[#3B82F6]/50"
+              className="flex flex-col items-start gap-4 rounded-2xl border border-line bg-card p-5 transition-colors hover:border-accent/50"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10">
-                <Icon size={20} className="text-white" />
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <Icon size={20} className="text-accent" />
               </span>
-              <span className="text-sm font-medium leading-tight text-white">{item.label}</span>
+              <span className="text-sm font-medium leading-tight text-fg">{item.label}</span>
             </div>
           );
         })}
