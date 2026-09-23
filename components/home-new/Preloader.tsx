@@ -100,7 +100,7 @@ export default function Preloader() {
         </div>
 
         <div className="mt-2 flex justify-end gap-2 text-sm">
-          <span className="text-fg-muted/80">loading...</span>
+          <span className="text-fg-subtle">loading...</span>
           <span className="font-medium text-fg">{progress}%</span>
         </div>
       </div>

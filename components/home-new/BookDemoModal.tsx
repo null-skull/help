@@ -70,14 +70,14 @@ export default function BookDemoModal() {
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close"
-          className="absolute right-4 top-4 cursor-pointer text-fg-muted/80 transition-colors hover:text-fg"
+          className="absolute right-4 top-4 cursor-pointer text-fg-subtle transition-colors hover:text-fg"
         >
           <X size={20} />
         </button>
 
         {submitted ? (
           <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <span className="flex size-12 items-center justify-center rounded-full bg-accent">
+            <span className="flex size-12 items-center justify-center rounded-full bg-success">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
                   d="M5 13l4 4L19 7"
@@ -119,7 +119,7 @@ export default function BookDemoModal() {
                   type="text"
                   required
                   placeholder="Jane Doe"
-                  className="rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
+                  className="rounded-lg border border-line-strong bg-card-2 px-4 py-2.5 text-base text-fg placeholder:text-fg-subtle outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/25"
                 />
               </div>
 
@@ -133,26 +133,26 @@ export default function BookDemoModal() {
                   type="email"
                   required
                   placeholder="jane@company.com"
-                  className="rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
+                  className="rounded-lg border border-line-strong bg-card-2 px-4 py-2.5 text-base text-fg placeholder:text-fg-subtle outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/25"
                 />
               </div>
 
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="demo-message" className="text-sm font-medium text-fg">
-                  Message <span className="text-fg-muted/70">(optional)</span>
+                  Message <span className="text-fg-subtle">(optional)</span>
                 </label>
                 <textarea
                   id="demo-message"
                   name="message"
                   rows={3}
                   placeholder="What would you like to see?"
-                  className="resize-none rounded-lg border border-line bg-page px-4 py-2.5 text-base text-fg placeholder:text-fg-muted/50 outline-none focus:border-accent"
+                  className="resize-none rounded-lg border border-line-strong bg-card-2 px-4 py-2.5 text-base text-fg placeholder:text-fg-subtle outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/25"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.02] hover:bg-white active:scale-[0.98]"
+                className="mt-2 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.02] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
               >
                 Send Request
               </button>

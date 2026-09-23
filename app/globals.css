@@ -15,22 +15,33 @@
   --text-dim: #999999;
   --accent-blue: #2572ed;
 
-  /* Dark home-new palette — change a value here to re-theme that role
-     across the whole /home-new page. */
+  /* Dark home-new theme — change a value here to re-theme that role across
+     the whole /home-new page. Surfaces step up in lightness (bg → surface →
+     surface-2 → surface-hover) to express elevation; text has three levels
+     (primary / secondary / muted); borders have a default and a strong
+     variant for hover and emphasis. */
   --hn-bg: #070b10;
-  --hn-primary: #6d5ef5;
-  --hn-primary-hover: #7c6fff;
-  --hn-primary-soft: #17142a;
-  --hn-text: #f5f5f5;
-  --hn-text-2: #a1a1aa;
-  --hn-border: #242424;
-  --hn-card: #13171e;
-  /* Section accents — each home-new section picks ONE of these (via the
-     .tone-* classes below) for its tag, icons, lines and highlights. */
-  --hn-yellow: #f9eb57;
-  --hn-lime: #c6f56f;
-  --hn-cyan: #83e7ee;
-  --hn-peach: #ffb9a2;
+  --hn-surface: #0d141b;
+  --hn-surface-2: #111a22;
+  --hn-surface-hover: #15212a;
+
+  --hn-primary: #0a9396;
+  --hn-primary-hover: #0cb5b8;
+  --hn-primary-active: #08777a;
+  --hn-primary-soft: color-mix(in oklab, var(--hn-primary) 14%, var(--hn-bg));
+
+  --hn-text: #f4f8f9;
+  --hn-text-2: #a5b4bc;
+  --hn-text-3: #687781;
+
+  --hn-border: #1a2730;
+  --hn-border-strong: #263640;
+
+  --hn-success: #22c55e;
+  --hn-warning: #f59e0b;
+  --hn-error: #ef4444;
+  --hn-info: #4f8cff;
+
   --r-sm: 8px;
   --r-md: 14px;
   --r-lg: 24px;
@@ -56,14 +67,23 @@
   --color-text-dim: var(--text-dim);
   --color-accent-blue: var(--accent-blue);
   --color-page: var(--hn-bg);
+  --color-card: var(--hn-surface);
+  --color-card-2: var(--hn-surface-2);
+  --color-card-hover: var(--hn-surface-hover);
   --color-primary: var(--hn-primary);
   --color-primary-hover: var(--hn-primary-hover);
+  --color-primary-active: var(--hn-primary-active);
   --color-primary-soft: var(--hn-primary-soft);
   --color-fg: var(--hn-text);
   --color-fg-muted: var(--hn-text-2);
+  --color-fg-subtle: var(--hn-text-3);
   --color-line: var(--hn-border);
-  --color-card: var(--hn-card);
-  --color-accent: var(--accent, var(--hn-cyan));
+  --color-line-strong: var(--hn-border-strong);
+  --color-success: var(--hn-success);
+  --color-warning: var(--hn-warning);
+  --color-error: var(--hn-error);
+  --color-info: var(--hn-info);
+  --color-accent: var(--accent, var(--hn-primary));
   --font-sans: var(--font-inter);
   --font-display: var(--font-bricolage);
 
@@ -157,7 +177,7 @@ body {
   box-shadow: var(--shadow-xl);
 }
 
-/* Home-new scrollbar: yellow thumb on the dark page background. Scoped via
+/* Home-new scrollbar: primary thumb on the dark page background. Scoped via
    :has() to pages that render .home-new, so the light / page keeps its
    default scrollbar; also covers inner scroll areas (mobile menu, modal,
    seat picker). scrollbar-color is only the fallback for browsers without
@@ -166,7 +186,7 @@ body {
 @supports not selector(::-webkit-scrollbar) {
   html:has(.home-new),
   .home-new * {
-    scrollbar-color: var(--hn-yellow) var(--hn-bg);
+    scrollbar-color: var(--hn-primary) var(--hn-bg);
     scrollbar-width: thin;
   }
 }
@@ -184,7 +204,7 @@ html:has(.home-new)::-webkit-scrollbar-track,
 
 html:has(.home-new)::-webkit-scrollbar-thumb,
 .home-new ::-webkit-scrollbar-thumb {
-  background: var(--hn-yellow);
+  background: var(--hn-primary);
   /* border: 2px solid var(--hn-bg); */
   border-radius: 999px;
   width: 4px;
@@ -192,26 +212,39 @@ html:has(.home-new)::-webkit-scrollbar-thumb,
 
 html:has(.home-new)::-webkit-scrollbar-thumb:hover,
 .home-new ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklab, var(--hn-yellow) 85%, white);
+  background: var(--hn-primary-hover);
+}
+
+/* Keyboard focus and text selection in the theme's primary color. */
+.home-new :focus-visible {
+  outline: 2px solid var(--hn-primary-hover);
+  outline-offset: 3px;
+}
+
+.home-new ::selection {
+  background: color-mix(in oklab, var(--hn-primary) 45%, transparent);
+  color: var(--hn-text);
 }
 
 /* Per-section accent. Set one of these on a section and every *-accent
    utility inside it (text-accent, bg-accent/10, border-accent/40, …) picks
-   up that color through the inherited --accent variable. */
+   up that color through the inherited --accent variable. All four tones
+   currently resolve to the theme primary; point one at another color to
+   give that section its own accent. */
 .tone-yellow {
-  --accent: var(--hn-yellow);
+  --accent: var(--hn-primary);
 }
 
 .tone-lime {
-  --accent: var(--hn-lime);
+  --accent: var(--hn-primary);
 }
 
 .tone-cyan {
-  --accent: var(--hn-cyan);
+  --accent: var(--hn-primary);
 }
 
 .tone-peach {
-  --accent: var(--hn-peach);
+  --accent: var(--hn-primary);
 }
 
 /* Colored halo in the current section accent (kept as plain classes, not
@@ -220,11 +253,16 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   box-shadow: 0 20px 60px -10px color-mix(in oklab, var(--accent) 45%, transparent);
 }
 
+/* Soft primary-colored lift under filled buttons. */
+.shadow-primary {
+  box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--hn-primary) 75%, transparent);
+}
+
 .tone-glow-soft {
   box-shadow: 0 20px 60px -20px color-mix(in oklab, var(--accent) 30%, transparent);
 }
 
-/* CTA backdrop: the top cap of a huge circle whose rim glows in --hn-yellow,
+/* CTA backdrop: the top cap of a huge circle whose rim glows in --hn-primary,
    read as a luminous dome rising behind the heading (::before), topped by a
    frosted-glass sheet of the same shape (::after) that blurs the glow and
    adds a thin highlight along the arc. The whole layer sits at low opacity
@@ -254,14 +292,14 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   background:
     radial-gradient(
       circle at center,
-      color-mix(in oklab, var(--hn-yellow) 35%, transparent) 0%,
-      color-mix(in oklab, var(--hn-yellow) 20%, transparent) 25%,
+      color-mix(in oklab, var(--hn-primary) 35%, transparent) 0%,
+      color-mix(in oklab, var(--hn-primary) 20%, transparent) 25%,
       transparent 65%
     ),
     radial-gradient(
       circle at center,
       transparent 45%,
-      color-mix(in oklab, var(--hn-yellow) 18%, var(--hn-bg)) 70%,
+      color-mix(in oklab, var(--hn-primary) 18%, var(--hn-bg)) 70%,
       transparent 100%
     );
 
@@ -284,8 +322,8 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
 }
 
 /* Footer backdrop: two soft, heavily blurred blobs in two different
-   section accents — a cyan oval in the top-right corner and a lime star in
-   the bottom-left — kept at low opacity so they tint the footer without
+   theme colors — a blue-to-teal oval in the top-right corner and a teal
+   star in the bottom-left — kept at low opacity so they tint the footer without
    competing with it. */
 .footer-blobs {
   position: absolute;
@@ -309,9 +347,9 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   border-radius: 50%;
   background: linear-gradient(
     120deg,
-    color-mix(in oklab, var(--hn-cyan) 70%, #3b5bff) 0%,
-    var(--hn-cyan) 60%,
-    color-mix(in oklab, var(--hn-cyan) 60%, white) 100%
+    var(--hn-info) 0%,
+    color-mix(in oklab, var(--hn-info) 50%, var(--hn-primary-hover)) 55%,
+    var(--hn-primary-hover) 100%
   );
 }
 
@@ -331,9 +369,9 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   inset: 0;
   background: linear-gradient(
     200deg,
-    var(--hn-cyan) 0%,
-    var(--hn-lime) 55%,
-    color-mix(in oklab, var(--hn-lime) 70%, var(--hn-yellow)) 100%
+    var(--hn-primary-hover) 0%,
+    var(--hn-primary) 55%,
+    var(--hn-primary-active) 100%
   );
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }

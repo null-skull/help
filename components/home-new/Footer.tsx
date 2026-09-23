@@ -57,11 +57,11 @@ export default function Footer() {
                 type="email"
                 required
                 placeholder={FOOTER.cta.placeholder}
-                className="min-w-0 flex-1 rounded-full border border-line bg-card/60 px-btn-x py-btn-y text-base text-fg placeholder:text-fg-muted/70 outline-none backdrop-blur-md transition-colors focus:border-accent"
+                className="min-w-0 flex-1 rounded-full border border-line-strong bg-card-2/70 px-btn-x py-btn-y text-base text-fg placeholder:text-fg-subtle outline-none backdrop-blur-md transition focus:border-primary focus:ring-3 focus:ring-primary/25"
               />
               <button
                 type="submit"
-                className="shrink-0 cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]"
+                className="shrink-0 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
               >
                 {FOOTER.cta.button}
               </button>
@@ -121,7 +121,7 @@ export default function Footer() {
                       e.preventDefault();
                       scrollToSection(link.href);
                     }}
-                    className="w-fit cursor-pointer text-sm text-fg/85 transition-colors hover:text-accent"
+                    className="w-fit cursor-pointer text-sm text-fg-muted transition-colors hover:text-fg"
                   >
                     {link.label}
                   </a>

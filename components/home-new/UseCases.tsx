@@ -53,7 +53,7 @@ export default function UseCases() {
           return (
             <div
               key={item.label}
-              className="flex flex-col items-start gap-4 rounded-2xl border border-line bg-card p-5 transition-colors hover:border-accent/50"
+              className="flex flex-col items-start gap-4 rounded-2xl border border-line bg-card p-5 transition-colors hover:border-accent/50 hover:bg-card-hover"
             >
               <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent/10">
                 <Icon size={20} className="text-accent" />

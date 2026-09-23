@@ -20,7 +20,7 @@ export default function Nav() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-page">
+    <header className="sticky top-0 z-50 border-b border-line bg-page/80 backdrop-blur-xl">
       <Section>
         <div className="flex items-center gap-split px-gutter py-3.5">
         <div className="w-logo shrink-0">
@@ -48,7 +48,7 @@ export default function Nav() {
         </nav>
 
         <div className="ml-auto hidden lg:block">
-          <button className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]">
+          <button className="cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]">
             Get Started
           </button>
         </div>
@@ -84,7 +84,7 @@ export default function Nav() {
             ))}
             <button
               onClick={() => setMenuOpen(false)}
-              className="mt-2 cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:bg-white active:scale-[0.98]"
+              className="mt-2 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
             >
               Get Started
             </button>

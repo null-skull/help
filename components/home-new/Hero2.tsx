@@ -61,11 +61,11 @@ export default function Hero2() {
         <div className="flex flex-wrap justify-center gap-4 pt-2 sm:gap-6">
           <button
             onClick={openBookDemo}
-            className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]"
+            className="cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
           >
             {HERO2.primaryCta}
           </button>
-          <button className="cursor-pointer rounded-full border border-fg px-btn-x py-btn-y text-base font-medium text-fg transition-transform hover:scale-[1.03] hover:bg-fg hover:text-page active:scale-[0.98]">
+          <button className="cursor-pointer rounded-full border border-line-strong bg-card/40 px-btn-x py-btn-y text-base font-medium text-fg backdrop-blur-sm transition hover:scale-[1.03] hover:border-primary hover:bg-card-hover active:scale-[0.98]">
             {HERO2.secondaryCta}
           </button>
         </div>
@@ -77,11 +77,11 @@ export default function Hero2() {
             ref={mockupRef}
             className="overflow-hidden rounded-2xl border border-line bg-card shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)] will-change-transform"
           >
-            <div className="flex items-center gap-2 border-b border-line bg-page px-4 py-3">
+            <div className="flex items-center gap-2 border-b border-line bg-card-2 px-4 py-3">
               <span className="size-3 rounded-full" style={{ background: "#FF5F57" }} />
               <span className="size-3 rounded-full" style={{ background: "#FFBD2E" }} />
               <span className="size-3 rounded-full" style={{ background: "#28CA41" }} />
-              <div className="ml-3 rounded-md bg-card px-3 py-1 text-xs text-fg-muted/70">
+              <div className="ml-3 rounded-md bg-page px-3 py-1 text-xs text-fg-subtle">
                 helpperr.com
               </div>
             </div>

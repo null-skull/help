@@ -69,11 +69,11 @@ export default function Hero() {
             <div className="flex flex-wrap gap-4 pt-6 sm:gap-6">
               <button
                 onClick={openBookDemo}
-                className="cursor-pointer rounded-full bg-fg px-btn-x py-btn-y text-base font-medium text-page transition-transform hover:scale-[1.03] hover:bg-white active:scale-[0.98]"
+                className="cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
               >
                 {HERO.primaryCta}
               </button>
-              <button className="cursor-pointer rounded-full border border-fg px-btn-x py-btn-y text-base font-medium text-fg transition-transform hover:scale-[1.03] hover:bg-fg hover:text-page active:scale-[0.98]">
+              <button className="cursor-pointer rounded-full border border-line-strong bg-card/40 px-btn-x py-btn-y text-base font-medium text-fg backdrop-blur-sm transition hover:scale-[1.03] hover:border-primary hover:bg-card-hover active:scale-[0.98]">
                 {HERO.secondaryCta}
               </button>
             </div>

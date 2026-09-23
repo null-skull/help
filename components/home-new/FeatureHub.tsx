@@ -33,7 +33,7 @@ function connectorPath(x1: number, y1: number) {
 function Node({ label, icon }: { label: string; icon: string }) {
   const Icon = ICONS[icon];
   return (
-    <div className="flex size-node max-w-full flex-col items-center justify-center gap-3 rounded-2xl border border-line bg-card p-3 text-center shadow-lg shadow-black/30">
+    <div className="flex size-node max-w-full flex-col items-center justify-center gap-3 rounded-2xl border border-line bg-card p-3 text-center shadow-lg shadow-black/30 transition-colors hover:border-line-strong hover:bg-card-hover">
       <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
         <Icon size={24} className="text-accent" />
       </span>

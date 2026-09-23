@@ -33,7 +33,7 @@ function SeatSelect({ seats, onChange }: { seats: number; onChange: (n: number) 
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-page px-3 py-2 text-sm font-medium text-fg transition-colors hover:border-accent"
+        className="flex cursor-pointer items-center gap-2 rounded-lg border border-line-strong bg-card-2 px-3 py-2 text-sm font-medium text-fg transition-colors hover:border-accent"
       >
         <Users size={14} className="text-fg-muted" />
         {seats}
@@ -83,7 +83,7 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
     <div
       className={`flex flex-col gap-6 rounded-2xl border p-card ${
         plan.highlight
-          ? "border-accent bg-card tone-glow-soft"
+          ? "border-primary/60 bg-gradient-to-b from-primary/12 to-card tone-glow-soft"
           : "border-line bg-card"
       }`}
     >
@@ -107,7 +107,7 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
         </div>
         <p className="text-sm text-fg-muted">{plan.description}</p>
         {isTeam && (
-          <p className="text-xs text-fg-muted/70">
+          <p className="text-xs text-fg-subtle">
             ${totalPrice}/month total for {seats} seats · {teamConfig.min}–{teamConfig.max} users
           </p>
         )}
@@ -117,7 +117,7 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
         <span className="text-2xl font-medium text-fg">
           {isTeam ? `${totalCredits!.toLocaleString()} credits` : plan.credits}
         </span>
-        <span className="text-xs text-fg-muted/70">{plan.creditsNote}</span>
+        <span className="text-xs text-fg-subtle">{plan.creditsNote}</span>
       </div>
 
       <ul className="flex flex-col gap-3">
@@ -131,10 +131,10 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
 
       <button
         onClick={openBookDemo}
-        className={`mt-auto cursor-pointer rounded-full px-btn-x py-btn-y text-base font-medium transition-transform hover:scale-[1.03] active:scale-[0.98] ${
+        className={`mt-auto cursor-pointer rounded-full px-btn-x py-btn-y text-base font-medium transition hover:scale-[1.03] active:scale-[0.98] ${
           plan.highlight
-            ? "bg-fg text-page hover:bg-white"
-            : "border border-fg text-fg hover:bg-fg hover:text-page"
+            ? "bg-primary text-fg shadow-primary hover:bg-primary-hover active:bg-primary-active"
+            : "border border-line-strong bg-card-2 text-fg hover:border-primary hover:bg-card-hover"
         }`}
       >
         {plan.cta}
@@ -180,7 +180,7 @@ export default function Pricing() {
           {PRICING.topUps.items.map((item) => (
             <div
               key={item.name}
-              className="flex flex-col gap-1 rounded-xl border border-line bg-card px-5 py-3"
+              className="flex flex-col gap-1 rounded-xl border border-line bg-card-2 px-5 py-3"
             >
               <span className="text-sm font-medium text-fg">{item.name}</span>
               <span className="text-xs text-fg-muted">

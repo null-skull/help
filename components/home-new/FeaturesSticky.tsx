@@ -86,10 +86,10 @@ export default function FeaturesSticky() {
               className="flex min-h-[70vh] flex-col justify-center gap-4 lg:max-w-feature-copy"
             >
               <Reveal as="div" selector="*" className="flex flex-col gap-4">
-                <span className={`text-sm font-medium ${i === active ? "text-accent" : "text-fg-muted/70"}`}>
+                <span className={`text-sm font-medium ${i === active ? "text-accent" : "text-fg-subtle"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className={`text-h3 font-medium leading-[1.1] transition-colors ${i === active ? "text-fg" : "text-fg-muted/70"}`}>
+                <h3 className={`text-h3 font-medium leading-[1.1] transition-colors ${i === active ? "text-fg" : "text-fg-subtle"}`}>
                   {item.title}
                 </h3>
                 <p className="text-lead leading-relaxed text-fg-muted">{item.body}</p>
