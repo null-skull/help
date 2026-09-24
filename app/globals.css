@@ -51,41 +51,207 @@
   --font-sans: var(--font-inter);
   --font-display: var(--font-bricolage);
 
-  /* Fluid sizing for the home-new page. Each clamp() lands on the original
-     desktop size at a 1440px viewport, shrinks toward the min on phones and
-     grows gently toward the max on 2K/4K screens — so breakpoints are only
-     needed for real layout changes, never for type or spacing. */
-  --text-display: clamp(2.25rem, 1.6rem + 3.4vw, 5.0rem);
-  --text-h2: clamp(1.875rem, 1.6rem + 1vw, 2.75rem);
-  --text-h3: clamp(1.5rem, 1.35rem + 0.6vw, 2rem);
-  --text-price: clamp(2rem, 1.8rem + 0.6vw, 2.5rem);
-  --text-title: clamp(1.125rem, 1rem + 0.28vw, 1.375rem);
-  --text-lead: clamp(1rem, 0.95rem + 0.2vw, 1.25rem);
+  /* Type and spacing tokens. Plain rem values that switch per scaling band
+     (see "Fluid page scaling" below); the root font-size does the fluid
+     part, so these must never contain vw. */
+  --text-display: var(--fs-display);
+  --text-h2: var(--fs-h2);
+  --text-h3: var(--fs-h3);
+  --text-price: var(--fs-price);
+  --text-title: var(--fs-title);
+  --text-lead: var(--fs-lead);
+  /* Intentionally viewport-driven: the preloader word fills the screen. */
   --text-preloader: clamp(2.5rem, 7vw + 0.5rem, 11rem);
 
-  --spacing-gutter: clamp(1.25rem, 0.8rem + 1.8vw, 3.5rem);
-  --spacing-section: clamp(4rem, 3.4rem + 1.8vw, 7rem);
-  --spacing-section-lg: clamp(4rem, 2rem + 6vw, 10rem);
-  --spacing-stack: clamp(2.5rem, 2rem + 2.2vw, 5rem);
-  --spacing-split: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
-  --spacing-card: clamp(1.25rem, 1rem + 1vw, 2.5rem);
-  --spacing-grid: clamp(1rem, 0.75rem + 0.8vw, 2rem);
-  --spacing-inset: clamp(1rem, 0.6rem + 1.2vw, 2.5rem);
-  --spacing-btn-x: clamp(1.25rem, 1rem + 0.6vw, 1.75rem);
-  --spacing-btn-y: clamp(0.625rem, 0.55rem + 0.25vw, 0.875rem);
-  --spacing-nav-link: clamp(0.75rem, 0.2rem + 1.4vw, 1.75rem);
-  --spacing-logo: clamp(7.5rem, 6rem + 4.5vw, 11rem);
-  --spacing-node: clamp(7.5rem, 6rem + 2vw, 9.5rem);
-  --spacing-hub: clamp(6rem, 4.5rem + 2.8vw, 8.5rem);
-  --spacing-hub-diagram: clamp(32rem, 40vw, 48rem);
-  --spacing-steps-diagram: clamp(26rem, 32vw, 35rem);
-  --spacing-sticky-panel: min(75vh, clamp(28rem, 40vw, 48rem));
+  --spacing-gutter: var(--sp-gutter);
+  --spacing-section: var(--sp-section);
+  --spacing-section-lg: var(--sp-section-lg);
+  --spacing-stack: var(--sp-stack);
+  --spacing-split: var(--sp-split);
+  --spacing-card: var(--sp-card);
+  --spacing-grid: var(--sp-grid);
+  --spacing-inset: var(--sp-inset);
+  --spacing-btn-x: var(--sp-btn-x);
+  --spacing-btn-y: var(--sp-btn-y);
+  --spacing-nav-link: var(--sp-nav-link);
+  --spacing-logo: var(--sp-logo);
+  --spacing-node: var(--sp-node);
+  --spacing-hub: var(--sp-hub);
+  --spacing-hub-diagram: var(--sp-hub-diagram);
+  --spacing-steps-diagram: var(--sp-steps-diagram);
+  --spacing-sticky-panel: min(75vh, var(--sp-sticky-panel));
 
-  --container-site: clamp(90rem, 75vw, 110rem);
-  --container-mockup: clamp(64rem, 60vw, 80rem);
-  --container-feature-copy: clamp(28rem, 38vw, 40rem);
-  --container-modal: clamp(26rem, 24rem + 8vw, 32rem);
-  --container-heading: clamp(50rem, 40vw, 64rem);
+  --container-site: 90rem;
+  --container-mockup: 64rem;
+  --container-feature-copy: var(--ct-feature-copy);
+  --container-modal: var(--ct-modal);
+  --container-heading: 50rem;
+}
+
+/* ---- Fluid page scaling -------------------------------------------------
+   The whole page scales like a zoomed image: the root font-size tracks the
+   viewport width relative to a design artboard, and because every size in
+   the site is rem (Tailwind's scale and the tokens above), everything
+   scales with it. Each band has its own artboard width and its own token
+   values; within a band the root is clamped to the band's width range.
+
+     band           viewport     artboard   root at artboard
+     desktop        >= 1024px    1440       16px  (see "desktop margins" below)
+     tablet         768–1023     834        16px
+     mobile-large   480–767      660        16px
+     mobile         < 480        402        16px
+
+   Desktop margins: on desktop --size-container is the width of the page
+   container (max-w-site = 90rem), not the viewport. It grows at a slower
+   rate than the screen, so the empty margin on each side widens smoothly:
+   none at 1024 (container 1024, root 11.4px), ~111px at 1440 (container
+   1217, root 13.5px), 240px at 1920 (container 1440, root 16px — the
+   design), and keeps growing proportionally beyond. Tune it with
+   --page-anchor-start (the screen width where margins begin) and the pair
+   --page-anchor-end / --page-width-at-end (a screen width and the container
+   width it should get).
+
+   Band edges match Tailwind's lg/md breakpoints (in rem, like Tailwind's
+   own media queries, which always use the browser default font-size — so
+   the fluid root never moves a breakpoint). See
+   .claude/skills/fluid-responsive/SKILL.md for the rules. */
+:root {
+  --size-unit: 16; /* root px at the artboard width — no unit */
+  --size-container-ideal: 1440; /* artboard width — no unit */
+
+  --page-anchor-start: 1024; /* margins start here: container = screen (no unit) */
+  --page-anchor-end: 1920; /* at this screen width… (no unit) */
+  --page-width-at-end: 1440; /* …the container is this wide (no unit) */
+  --size-container: calc(
+    var(--page-anchor-start) * 1px + (100vw - var(--page-anchor-start) * 1px) *
+      (var(--page-width-at-end) - var(--page-anchor-start)) /
+      (var(--page-anchor-end) - var(--page-anchor-start))
+  );
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+
+  /* Desktop (1440 artboard) token values. */
+  --fs-display: 4.625rem;
+  --fs-h2: 2.5rem;
+  --fs-h3: 1.875rem;
+  --fs-price: 2.375rem;
+  --fs-title: 1.25rem;
+  --fs-lead: 1.125rem;
+
+  --sp-gutter: 2.375rem;
+  --sp-section: 5rem;
+  --sp-section-lg: 7.375rem;
+  --sp-stack: 4rem;
+  --sp-split: 4.125rem;
+  --sp-card: 1.875rem;
+  --sp-grid: 1.5rem;
+  --sp-inset: 1.625rem;
+  --sp-btn-x: 1.5rem;
+  --sp-btn-y: 0.75rem;
+  --sp-nav-link: 1.5rem;
+  --sp-logo: 10rem;
+  --sp-node: 7.75rem;
+  --sp-hub: 7rem;
+  --sp-hub-diagram: 36rem;
+  --sp-steps-diagram: 28.75rem;
+  --sp-sticky-panel: 36rem;
+
+  --ct-feature-copy: 34.25rem;
+  --ct-modal: 31.25rem;
+}
+
+/* Tablet (834 artboard). */
+@media (max-width: 63.999rem) {
+  :root {
+    /* Below desktop the container is the full screen again (no side
+       margins); the smaller bands only change the min/max. */
+    --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 1023px;
+
+    --fs-display: 3.375rem;
+    --fs-h2: 2.125rem;
+    --fs-h3: 1.625rem;
+    --fs-price: 2.125rem;
+    --fs-title: 1.125rem;
+    --fs-lead: 1rem;
+
+    --sp-gutter: 1.75rem;
+    --sp-section: 4.375rem;
+    --sp-section-lg: 5.125rem;
+    --sp-stack: 3.125rem;
+    --sp-split: 2.625rem;
+    --sp-card: 1.5rem;
+    --sp-grid: 1.125rem;
+    --sp-inset: 1.25rem;
+    --sp-btn-x: 1.375rem;
+    --sp-btn-y: 0.625rem;
+    --sp-nav-link: 0.875rem;
+    --sp-logo: 8.375rem;
+    --sp-node: 7.5rem;
+    --sp-hub: 6rem;
+    --sp-hub-diagram: 32rem;
+    --sp-steps-diagram: 26rem;
+    --sp-sticky-panel: 28rem;
+
+    --ct-feature-copy: 28rem;
+    --ct-modal: 28.125rem;
+  }
+}
+
+/* Large phone / small tablet (660 artboard). */
+@media (max-width: 47.999rem) {
+  :root {
+    --size-container-ideal: 660;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+
+    --fs-display: 3rem;
+    --fs-h2: 2rem;
+    --fs-price: 2rem;
+
+    --sp-gutter: 1.5rem;
+    --sp-section: 4.125rem;
+    --sp-section-lg: 4.5rem;
+    --sp-stack: 2.875rem;
+    --sp-split: 2.125rem;
+    --sp-card: 1.375rem;
+    --sp-inset: 1.125rem;
+    --sp-btn-x: 1.25rem;
+    --sp-nav-link: 0.75rem;
+    --sp-logo: 7.875rem;
+
+    --ct-modal: 27.25rem;
+  }
+}
+
+/* Phone (402 artboard). */
+@media (max-width: 29.999rem) {
+  :root {
+    --size-container-ideal: 402;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+
+    --fs-display: 2.5rem;
+    --fs-h2: 1.875rem;
+    --fs-h3: 1.5rem;
+
+    --sp-gutter: 1.25rem;
+    --sp-section: 4rem;
+    --sp-section-lg: 4rem;
+    --sp-stack: 2.5rem;
+    --sp-split: 1.5rem;
+    --sp-card: 1.25rem;
+    --sp-grid: 1rem;
+    --sp-inset: 1rem;
+    --sp-logo: 7.5rem;
+
+    --ct-modal: 26rem;
+  }
+}
+
+html {
+  font-size: var(--size-font);
 }
 
 * {

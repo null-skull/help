@@ -54,7 +54,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <Section id="hero" className="tone-yellow flex min-h-[820px] flex-col gap-stack border-b px-gutter py-section lg:flex-row lg:gap-split">
+    <Section id="hero" className="tone-yellow flex min-h-[51.25rem] flex-col gap-stack border-b px-gutter py-section lg:flex-row lg:gap-split">
       <div className="flex flex-col items-center justify-between gap-stack lg:flex-1 lg:pt-10">
         {/* <div className="flex flex-col items-center justify-between gap-stack lg:flex-1 lg:pt-10"> */}
         <div>
@@ -93,7 +93,7 @@ export default function Hero() {
         </div> */}
       </div>
 
-      <div className="relative hidden h-auto min-h-[400px] flex-1 overflow-hidden rounded-2xl border border-line lg:block">
+      <div className="relative hidden h-auto min-h-[25rem] flex-1 overflow-hidden rounded-2xl border border-line lg:block">
         <video
           src="/home-new/Hero.mp4"
           autoPlay

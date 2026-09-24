@@ -161,9 +161,9 @@ export default function HowItWorks() {
         {HOW_IT_WORKS.steps.map((step, i) => (
           <div key={step.number} className="relative flex gap-4 px-3">
             {i > 0 && (
-              <span className="absolute left-[15px] -top-8 h-8 border-l border-dashed border-line-strong" />
+              <span className="absolute left-[0.9375rem] -top-8 h-8 border-l border-dashed border-line-strong" />
             )}
-            <span className="mt-1.5 size-[11px] shrink-0 rounded-full bg-fg" />
+            <span className="mt-1.5 size-[0.6875rem] shrink-0 rounded-full bg-fg" />
             <div className="flex flex-col gap-2">
               <h3 className="text-title font-medium text-fg">
                 <span className="text-accent">{step.number}) </span>

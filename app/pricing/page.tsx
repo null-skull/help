@@ -7,6 +7,7 @@ import PricingComparison from "@/components/home-new/PricingComparison";
 import FAQSection from "@/components/home-new/FAQ";
 import CTASection from "@/components/home-new/CTA";
 import PageTransition from "@/components/home-new/PageTransition";
+import HashScroll from "@/components/home-new/HashScroll";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <PageTransition>
+      {/* Lands on a section when linked as e.g. /pricing#compare. */}
+      <HashScroll />
       <Section className="tone-yellow flex flex-col gap-stack border-b px-gutter py-section">
         <Reveal as="div" selector="*" className="mx-auto flex max-w-[46em] flex-col items-center gap-5 text-center">
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent">

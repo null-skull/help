@@ -203,7 +203,7 @@ export default function Pricing() {
       <PricingPlans />
 
       <Link
-        href="/pricing"
+        href="/pricing#compare"
         className="group inline-flex w-fit items-center gap-2 self-center text-base font-medium text-accent transition-colors hover:text-primary-hover"
       >
         {PRICING_PAGE.compareLink}

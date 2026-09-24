@@ -10,7 +10,7 @@ export default function LogoMarquee() {
       <p className="text-base font-medium text-fg">{LOGO_MARQUEE.label}</p>
 
       <div className="w-full overflow-hidden">
-        <div className="flex w-max animate-marquee items-center gap-[72px]">
+        <div className="flex w-max animate-marquee items-center gap-18">
           {logos.map((logo, i) => (
             <Image
               key={`${logo.name}-${i}`}

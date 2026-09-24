@@ -16,7 +16,10 @@ export function scrollToSection(href: string) {
   if (!el) return;
 
   if (instance) {
-    instance.scrollTo(el as HTMLElement, { offset: -88, duration: 1.1 });
+    // 5.5rem clears the fixed header; read in rem because the root
+    // font-size is fluid (see "Fluid page scaling" in globals.css).
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    instance.scrollTo(el as HTMLElement, { offset: -5.5 * rem, duration: 1.1 });
     return;
   }
   el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
