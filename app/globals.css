@@ -319,8 +319,10 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   background: var(--hn-primary-hover);
 }
 
-/* Keyboard focus and text selection in the theme's primary color. */
-.home-new :focus-visible {
+/* Keyboard focus and text selection in the theme's primary color. Form fields
+   are excluded: they draw their own focus ring (border + ring-3), and an
+   outline on top of it doubled the ring. */
+.home-new :focus-visible:not(input, textarea, select) {
   outline: 2px solid var(--hn-primary-hover);
   outline-offset: 3px;
 }
@@ -394,6 +396,19 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
   from {
     opacity: 0;
     transform: translateY(-100%);
+  }
+}
+
+/* Login flow: each step (email, username, check inbox) eases in as it
+   replaces the previous one. */
+.auth-step-in {
+  animation: hn-auth-step-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hn-auth-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
   }
 }
 
@@ -639,7 +654,8 @@ html:has(.home-new)::-webkit-scrollbar-thumb:hover,
     animation: none;
   }
 
-  .site-header-in {
+  .site-header-in,
+  .auth-step-in {
     animation: none;
   }
 

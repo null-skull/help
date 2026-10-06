@@ -104,7 +104,16 @@ export default function Nav() {
           })}
         </nav>
 
-        <div className="ml-auto hidden lg:block">
+        <div className="ml-auto hidden items-center gap-6 lg:flex">
+          <Link
+            href="/login"
+            aria-current={pathname === "/login" ? "page" : undefined}
+            className={`text-base font-medium transition-colors hover:text-fg ${
+              pathname === "/login" ? "text-fg" : "text-fg-muted"
+            }`}
+          >
+            Log in
+          </Link>
           <button className="cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]">
             Get Started
           </button>
@@ -142,9 +151,17 @@ export default function Nav() {
                 </Link>
               );
             })}
+            <Link
+              href="/login"
+              onClick={() => setMenuOpen(false)}
+              aria-current={pathname === "/login" ? "page" : undefined}
+              className="mt-2 rounded-full border border-line-strong bg-card-2 px-btn-x py-btn-y text-center text-base font-medium text-fg transition hover:border-primary hover:bg-card-hover"
+            >
+              Log in
+            </Link>
             <button
               onClick={() => setMenuOpen(false)}
-              className="mt-2 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
+              className="mt-1 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
             >
               Get Started
             </button>

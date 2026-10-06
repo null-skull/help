@@ -23,7 +23,7 @@ export default function CTASection() {
             {CTA.primaryCta}
           </button>
           <button
-            onClick={openBookDemo}
+            onClick={openBookDemo} data-action="book-demo"
             className="cursor-pointer rounded-full border border-line-strong bg-card/40 px-btn-x py-btn-y text-base font-medium text-fg backdrop-blur-sm transition hover:scale-[1.03] hover:border-primary hover:bg-card-hover active:scale-[0.98]"
           >
             {CTA.secondaryCta}

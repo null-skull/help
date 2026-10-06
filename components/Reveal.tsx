@@ -72,8 +72,10 @@ export default function Reveal({
   }, []);
 
   return (
+    // data-reveal* mirror the props so the static export (vanilla/) can
+    // replay the same animation without React.
     // @ts-expect-error dynamic tag ref typing
-    <Tag ref={ref} className={className}>
+    <Tag ref={ref} className={className} data-reveal="" data-reveal-selector={selector} data-reveal-y={y} data-reveal-stagger={stagger}>
       {children}
     </Tag>
   );

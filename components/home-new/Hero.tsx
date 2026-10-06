@@ -68,7 +68,7 @@ export default function Hero() {
             <p className="max-w-[36em] text-lead leading-relaxed text-fg-muted">{HERO.sub}</p>
             <div className="flex flex-wrap gap-4 pt-6 sm:gap-6">
               <button
-                onClick={openBookDemo}
+                onClick={openBookDemo} data-action="book-demo"
                 className="cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
               >
                 {HERO.primaryCta}

@@ -32,12 +32,13 @@ function SeatSelect({ seats, onChange }: { seats: number; onChange: (n: number) 
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        data-seat-toggle
         aria-haspopup="listbox"
         aria-expanded={open}
         className="flex cursor-pointer items-center gap-2 rounded-lg border border-line-strong bg-card-2 px-3 py-2 text-sm font-medium text-fg transition-colors hover:border-accent"
       >
         <Users size={14} className="text-fg-muted" />
-        {seats}
+        <span data-seat-count>{seats}</span>
         <ChevronDown size={14} className={`text-fg-muted transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
@@ -82,6 +83,14 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
 
   return (
     <div
+      // data-seat-* lets the static export (vanilla/) recompute team totals.
+      {...(isTeam && {
+        "data-team-card": "",
+        "data-seat-price": Number(plan.price.replace("$", "")),
+        "data-seat-credits": Number(plan.credits.replace(/[^0-9]/g, "")),
+        "data-seat-min": teamConfig.min,
+        "data-seat-max": teamConfig.max,
+      })}
       className={`flex flex-col gap-6 rounded-2xl border p-card ${
         plan.highlight
           ? "border-primary/60 bg-gradient-to-b from-primary/12 to-card tone-glow-soft"
@@ -108,14 +117,14 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
         </div>
         <p className="text-sm text-fg-muted">{plan.description}</p>
         {isTeam && (
-          <p className="text-xs text-fg-subtle">
+          <p data-seat-summary className="text-xs text-fg-subtle">
             ${totalPrice}/month total for {seats} seats · {teamConfig.min}–{teamConfig.max} users
           </p>
         )}
       </div>
 
       <div className="flex flex-col gap-1 border-y border-line py-4">
-        <span className="text-2xl font-medium text-fg">
+        <span data-seat-credits-total className="text-2xl font-medium text-fg">
           {isTeam ? `${totalCredits!.toLocaleString()} credits` : plan.credits}
         </span>
         <span className="text-xs text-fg-subtle">{plan.creditsNote}</span>
@@ -131,7 +140,7 @@ function PlanCard({ plan }: { plan: (typeof PRICING.plans)[number] }) {
       </ul>
 
       <button
-        onClick={openBookDemo}
+        onClick={openBookDemo} data-action="book-demo"
         className={`mt-auto cursor-pointer rounded-full px-btn-x py-btn-y text-base font-medium transition hover:scale-[1.03] active:scale-[0.98] ${
           plan.highlight
             ? "bg-primary text-fg shadow-primary hover:bg-primary-hover active:bg-primary-active"

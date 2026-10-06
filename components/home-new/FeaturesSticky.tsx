@@ -83,13 +83,14 @@ export default function FeaturesSticky() {
               ref={(el) => {
                 itemRefs.current[i] = el;
               }}
+              data-feature-step={i}
               className="flex min-h-[70vh] flex-col justify-center gap-4 lg:max-w-feature-copy"
             >
               <Reveal as="div" selector="*" className="flex flex-col gap-4">
-                <span className={`text-sm font-medium ${i === active ? "text-accent" : "text-fg-subtle"}`}>
+                <span data-feature-num className={`text-sm font-medium ${i === active ? "text-accent" : "text-fg-subtle"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className={`text-h3 font-medium leading-[1.1] transition-colors ${i === active ? "text-fg" : "text-fg-subtle"}`}>
+                <h3 data-feature-title className={`text-h3 font-medium leading-[1.1] transition-colors ${i === active ? "text-fg" : "text-fg-subtle"}`}>
                   {item.title}
                 </h3>
                 <p className="text-lead leading-relaxed text-fg-muted">{item.body}</p>
@@ -103,6 +104,7 @@ export default function FeaturesSticky() {
             {FEATURES.items.map((item, i) => (
               <div
                 key={item.title}
+                data-feature-panel={i}
                 className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-500 ${GRADIENT} ${
                   i === active ? "opacity-100" : "opacity-0"
                 }`}

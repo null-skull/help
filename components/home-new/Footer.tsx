@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,14 +11,10 @@ import Reveal from "@/components/Reveal";
 import { handleSiteLinkClick } from "@/lib/site-links";
 import { openBookDemo } from "@/lib/book-demo-modal";
 
-const SOCIAL_ICONS = [
-  { name: "Twitter", src: "/home-new/icons/twitter.svg" },
-  { name: "LinkedIn", src: "/home-new/icons/linkedin.svg" },
-  { name: "GitHub", src: "/home-new/icons/github.svg" },
-];
-
 export default function Footer() {
   const pathname = usePathname();
+  // Newsletter sign-up has no backend yet: submitting just confirms inline.
+  const [subscribed, setSubscribed] = useState(false);
 
   return (
     <footer className="tone-lime relative isolate overflow-hidden bg-page">
@@ -45,39 +42,48 @@ export default function Footer() {
           </div>
 
           <div className="flex w-full flex-col gap-4 lg:max-w-[34rem]">
-            <form
-              className="flex flex-col gap-3 sm:flex-row"
-              onSubmit={(e) => {
-                e.preventDefault();
-                openBookDemo();
-              }}
-            >
-              <label htmlFor="footer-email" className="sr-only">
-                Email
-              </label>
-              <input
-                id="footer-email"
-                name="email"
-                type="email"
-                required
-                placeholder={FOOTER.cta.placeholder}
-                className="min-w-0 flex-1 rounded-full border border-line-strong bg-card-2/70 px-btn-x py-btn-y text-base text-fg placeholder:text-fg-subtle outline-none backdrop-blur-md transition focus:border-primary focus:ring-3 focus:ring-primary/25"
-              />
-              <button
-                type="submit"
-                className="shrink-0 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
+            {subscribed ? (
+              <p role="status" className="flex items-center gap-3 rounded-full border border-success/30 bg-success/10 px-btn-x py-btn-y text-base text-fg">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-success text-page">
+                  <Check size={14} strokeWidth={3} aria-hidden />
+                </span>
+                {FOOTER.cta.success}
+              </p>
+            ) : (
+              <form
+                className="flex flex-col gap-3 sm:flex-row"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSubscribed(true);
+                }}
               >
-                {FOOTER.cta.button}
-              </button>
-            </form>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-muted">
+                <label htmlFor="footer-email" className="sr-only">
+                  Email
+                </label>
+                <input
+                  id="footer-email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder={FOOTER.cta.placeholder}
+                  className="min-w-0 flex-1 rounded-full border border-line-strong bg-card-2/70 px-btn-x py-btn-y text-base text-fg placeholder:text-fg-subtle outline-none backdrop-blur-md transition focus:border-primary focus:ring-3 focus:ring-primary/25"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 cursor-pointer rounded-full bg-primary px-btn-x py-btn-y text-base font-medium text-fg transition hover:scale-[1.03] hover:bg-primary-hover active:bg-primary-active shadow-primary active:scale-[0.98]"
+                >
+                  {FOOTER.cta.button}
+                </button>
+              </form>
+            )}
+            {/* <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg-muted">
               {FOOTER.cta.perks.map((perk) => (
                 <li key={perk} className="flex items-center gap-2">
                   <Check size={14} className="shrink-0 text-accent" />
                   {perk}
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         </Reveal>
 
@@ -94,16 +100,20 @@ export default function Footer() {
             </div>
             <p className="max-w-[24rem] text-sm leading-relaxed text-fg-muted">{FOOTER.description}</p>
             <div className="flex items-center divide-x divide-line" aria-label={FOOTER.social.label}>
-              {SOCIAL_ICONS.map((icon) => (
-                <a
-                  key={icon.name}
-                  href="#"
-                  aria-label={icon.name}
-                  className="cursor-pointer px-4 opacity-70 transition-opacity first:pl-0 hover:opacity-100"
-                >
-                  <Image src={icon.src} alt="" width={18} height={18} />
-                </a>
-              ))}
+              {FOOTER.social.links.map((link) => {
+                const external = link.href !== "#";
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    aria-label={link.name}
+                    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                    className="cursor-pointer px-4 opacity-70 transition-opacity first:pl-0 hover:opacity-100"
+                  >
+                    <Image src={link.icon} alt="" width={20} height={20} className="size-[1.125rem]" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -114,6 +124,7 @@ export default function Footer() {
                 {col.links.map((link) => (
                   <Link
                     key={link.label}
+                    data-action={link.label === "Book a Demo" ? "book-demo" : undefined}
                     href={link.href}
                     onClick={(e) => {
                       if (link.label === "Book a Demo") {

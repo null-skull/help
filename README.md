@@ -2,8 +2,9 @@
 
 Marketing site for Helpperr, built with [Next.js](https://nextjs.org) (App Router) and Tailwind CSS v4.
 
-- `app/page.tsx` — the live homepage.
-- `app/home-new/page.tsx` — the new dark-theme homepage (`/home-new`), built from the components in `components/home-new/` and the copy in `lib/home-new-content.ts`.
+- `app/(site)/` — marketing pages with the shared nav and footer: home (`/`), `/pricing` and `/contact`.
+- `app/(auth)/login` — the login / sign-up flow (`/login`), shown without the nav and footer. It runs on a mock auth client (`lib/auth-client.ts`) until a backend is connected.
+- Components live in `components/home-new/` and the copy in `lib/home-new-content.ts`. `/home-new` redirects to `/`.
 
 ## Getting Started
 
@@ -14,7 +15,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) for the live homepage, or [http://localhost:3000/home-new](http://localhost:3000/home-new) for the new page.
+Open [http://localhost:3000](http://localhost:3000).
 
 Other scripts:
 

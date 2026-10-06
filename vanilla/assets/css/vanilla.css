@@ -1,0 +1,32 @@
+/* Additions for the static (vanilla) export only — loaded after styles.css.
+   Everything else comes from the site's own compiled stylesheet. */
+
+/* Page transitions between the .html pages, using the browser's cross-document
+   View Transitions (Chrome/Edge 126+, Safari 18.2+; others just navigate).
+   Same motion as the React site: the old page lifts away, the new one rises
+   in, and the header (named "site-header" in the markup) stays put. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Named only while a transition runs: a permanent view-transition-name makes
+   <main> its own rendering layer, which subtly changes text anti-aliasing
+   versus the React site. */
+html:active-view-transition main {
+  view-transition-name: page;
+}
+
+::view-transition-old(page) {
+  animation: hn-page-out 200ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(page) {
+  animation: hn-page-in 520ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation: none;
+  }
+}

@@ -61,7 +61,7 @@ export default function PricingComparison() {
                 </span>
               </div>
               <button
-                onClick={openBookDemo}
+                onClick={openBookDemo} data-action="book-demo"
                 className={`shrink-0 cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition ${
                   p === HIGHLIGHT
                     ? "bg-primary text-fg shadow-primary hover:bg-primary-hover active:bg-primary-active"
@@ -120,7 +120,7 @@ export default function PricingComparison() {
                         <span className="text-lead font-medium text-fg">{plan.price}</span> {plan.period}
                       </span>
                       <button
-                        onClick={openBookDemo}
+                        onClick={openBookDemo} data-action="book-demo"
                         className={`mt-1 w-full max-w-[11rem] cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition ${
                           i === HIGHLIGHT
                             ? "bg-primary text-fg shadow-primary hover:bg-primary-hover active:bg-primary-active"

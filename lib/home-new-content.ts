@@ -318,11 +318,12 @@ export const FOOTER = {
   description:
     "The AI documentation platform that turns any workflow into professional, reusable knowledge - instantly.",
   cta: {
-    heading: ["Turn every workflow into", "documentation in minutes"],
-    sub: "Start free today — record once and let Helpperr write the guide for you.",
+    heading: ["Stay updated with our", "latest insights"],
+    sub: "Product updates, documentation tips and new features, delivered to your inbox once a month. No spam, unsubscribe anytime.",
     placeholder: "Enter your email",
-    button: "Get started",
-    perks: ["No credit card required", "Free Chrome extension"],
+    button: "Subscribe",
+    success: "You're subscribed! Watch your inbox for our next update.",
+    // perks: ["No credit card required", "Free Chrome extension"],
   },
   columns: [
     {
@@ -346,12 +347,22 @@ export const FOOTER = {
     {
       title: "Legal",
       links: [
-        { label: "Privacy Policy", href: "#" },
+        { label: "Privacy Policy", href: "/privacy-policy" },
         { label: "Terms of Service", href: "#" },
       ],
     },
   ],
-  social: { label: "Follow us" },
+  // Replace each "#" with the real profile URL — links open in a new tab
+  // once they point somewhere.
+  social: {
+    label: "Follow us",
+    links: [
+      { name: "LinkedIn", icon: "/home-new/icons/linkedin.svg", href: "#" },
+      { name: "Instagram", icon: "/home-new/icons/instagram.svg", href: "#" },
+      { name: "YouTube", icon: "/home-new/icons/youtube.svg", href: "#" },
+      { name: "X (Twitter)", icon: "/home-new/icons/x.svg", href: "#" },
+    ],
+  },
   copyright: "© 2026 Helpperr Inc. All rights reserved.",
   tagline: "Made with ♥ for teams who document",
 };
@@ -487,5 +498,78 @@ export const CONTACT_PAGE = {
   success: {
     title: "Message sent",
     body: "Thanks for reaching out — our team will reply by email shortly.",
+  },
+};
+
+// Login & sign-up flow (/login). Placeholders in {braces} are filled in by the
+// component.
+export const AUTH = {
+  // Right-hand panel on /login (desktop): rotating captions above the
+  // platform diagram, which is built from FEATURE_HUB.items.
+  showcase: [
+    {
+      heading: "Record once. Document forever.",
+      sub: "Capture any workflow and Helpperr's AI turns it into a polished, step-by-step guide.",
+    },
+    {
+      heading: "Everything documentation needs, built in.",
+      sub: "Recording, AI writing, editing and publishing, connected in one workspace.",
+    },
+    {
+      heading: "Built for every team.",
+      sub: "Share guides, reuse content and keep your team's knowledge in one searchable place.",
+    },
+  ],
+  email: {
+    heading: "Welcome to Helpperr",
+    sub: "Log in or create your account — we'll email you a magic link, no password needed.",
+    label: "Email",
+    placeholder: "you@company.com",
+    cta: "Continue",
+    divider: "or",
+    google: "Continue with Google",
+    legal: {
+      prefix: "By continuing, you agree to our",
+      privacy: { label: "Privacy Policy", href: "/privacy-policy" },
+      join: "and",
+      terms: { label: "Terms of Service", href: "#" },
+    },
+    errors: {
+      required: "Enter your email address.",
+      invalid: "Enter a valid email address, like you@company.com.",
+    },
+  },
+  username: {
+    heading: "Choose your username",
+    sub: "This is how you'll appear to your team in Helpperr.",
+    signingUpAs: "Signing up as",
+    change: "Change",
+    label: "Username",
+    placeholder: "yourname",
+    hint: "3–20 characters: lowercase letters, numbers, dots, hyphens or underscores.",
+    cta: "Continue",
+    status: {
+      checking: "Checking availability…",
+      available: "{username} is available",
+      taken: "{username} is already taken",
+    },
+    errors: {
+      required: "Choose a username to continue.",
+      tooShort: "Use at least 3 characters.",
+      tooLong: "Use 20 characters or fewer.",
+      start: "Start with a letter.",
+      chars: "Use only lowercase letters, numbers, dots, hyphens or underscores.",
+    },
+  },
+  inbox: {
+    heading: "Check your inbox",
+    existing: "We've sent a magic link to {email}. Click the link in the email to continue.",
+    newUser: "We've sent a magic link to {email}. Click the link in the email to finish setting up your account.",
+    resend: "Resend magic link",
+    resending: "Sending…",
+    resent: "New link sent. Check your inbox.",
+    cooldown: "Resend in {seconds}s",
+    change: "Change email",
+    help: "Can't find it? Check your spam or promotions folder.",
   },
 };

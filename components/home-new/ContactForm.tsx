@@ -36,7 +36,7 @@ export function ContactOptions() {
           "group flex w-full cursor-pointer items-start gap-4 rounded-2xl border border-line bg-card p-5 text-left transition-colors hover:border-line-strong hover:bg-card-hover";
 
         return item.action === "demo" ? (
-          <button key={item.title} type="button" onClick={openBookDemo} className={className}>
+          <button key={item.title} type="button" onClick={openBookDemo} data-action="book-demo" className={className}>
             {inner}
           </button>
         ) : (

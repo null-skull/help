@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Nav from "@/components/home-new/Nav";
-import Footer from "@/components/home-new/Footer";
-import BookDemoModal from "@/components/home-new/BookDemoModal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,14 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${bricolage.variable} antialiased`}>
       <body>
         <SmoothScroll>
-          {/* Shared site chrome: every page gets the nav, footer and the
-              Book a Demo modal (opened from anywhere via openBookDemo()). */}
-          <div className="home-new min-h-screen bg-page font-display text-fg">
-            <Nav />
-            <main>{children}</main>
-            <Footer />
-            <BookDemoModal />
-          </div>
+          {/* Theme wrapper for every page. Site chrome (nav, footer, Book a
+              Demo modal) lives in app/(site)/layout.tsx, so the auth pages in
+              app/(auth) render without it. */}
+          <div className="home-new min-h-screen bg-page font-display text-fg">{children}</div>
         </SmoothScroll>
       </body>
     </html>

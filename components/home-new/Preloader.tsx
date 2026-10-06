@@ -81,7 +81,7 @@ export default function Preloader() {
   if (hidden) return null;
 
   return (
-    <div ref={rootRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-page" aria-hidden>
+    <div ref={rootRef} data-preloader className="fixed inset-0 z-[100] flex items-center justify-center bg-page" aria-hidden>
       <div>
         <div className="relative inline-block">
           {/* Empty / unfilled wordmark */}
@@ -92,6 +92,7 @@ export default function Preloader() {
               painted via normal color / background-clip:text respectively —
               so the water never bleeds into the gaps between letters. */}
           <div
+            data-preloader-fill
             className="absolute inset-0 overflow-hidden"
             style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}
           >
@@ -112,7 +113,7 @@ export default function Preloader() {
 
         <div className="mt-2 flex justify-end gap-2 text-sm">
           <span className="text-fg-subtle">loading...</span>
-          <span className="font-medium text-fg">{progress}%</span>
+          <span data-preloader-progress className="font-medium text-fg">{progress}%</span>
         </div>
       </div>
     </div>

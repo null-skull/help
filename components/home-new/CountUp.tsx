@@ -51,7 +51,7 @@ export default function CountUp({ value, className }: { value: string; className
   }, [value]);
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} data-countup={value}>
       {value}
     </span>
   );
